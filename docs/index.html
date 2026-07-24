@@ -50,11 +50,25 @@
   .category-tab { padding: 13px 18px; font-size: 14px; font-weight: 600; border: none; background: none; color: var(--muted); border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
   .category-tab:hover, .category-tab.is-active { color: var(--primary); border-bottom-color: var(--primary); }
 
-  /* ── Hero ── */
-  .hero-section { background: linear-gradient(135deg, var(--primary) 0%, #3aaa6e 100%); color: white; padding: 44px 20px; text-align: center; }
-  .hero-section h1 { font-size: 30px; font-weight: 900; margin-bottom: 8px; line-height: 1.3; }
-  .hero-section p { font-size: 15px; opacity: 0.85; margin-bottom: 20px; }
-  .hero-badge { display: inline-block; background: var(--accent); color: white; padding: 6px 18px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+  /* ── Hero Banner ── */
+  .hero-banner { position: relative; overflow: hidden; height: 320px; background: #111; }
+  @media (max-width: 768px) { .hero-banner { height: 200px; } }
+  .banner-track { display: flex; height: 100%; transition: transform 0.5s ease; }
+  .banner-slide { flex: 0 0 100%; height: 100%; position: relative; display: flex; align-items: center; padding: 0 60px; overflow: hidden; }
+  .banner-slide img.banner-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.55; pointer-events: none; }
+  .banner-content { position: relative; z-index: 2; color: white; max-width: 500px; }
+  .banner-tag { display: inline-block; background: var(--accent); color: white; font-size: 12px; font-weight: 800; padding: 4px 12px; border-radius: 20px; margin-bottom: 10px; letter-spacing: 0.5px; }
+  .banner-title { font-size: 32px; font-weight: 900; line-height: 1.25; margin-bottom: 10px; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+  .banner-sub { font-size: 14px; opacity: 0.9; margin-bottom: 18px; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+  .banner-cta { display: inline-block; background: white; color: var(--primary); font-size: 13px; font-weight: 800; padding: 10px 22px; border-radius: 8px; border: none; cursor: pointer; }
+  .banner-cta:hover { background: #e8f5e9; }
+  .banner-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+  .banner-arrow:hover { background: rgba(255,255,255,0.4); }
+  .banner-arrow.prev { left: 12px; }
+  .banner-arrow.next { right: 12px; }
+  .banner-dots { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; z-index: 10; }
+  .banner-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5); border: none; cursor: pointer; padding: 0; transition: background 0.2s, transform 0.2s; }
+  .banner-dot.is-active { background: white; transform: scale(1.3); }
 
   /* ── Main ── */
   .page-main { max-width: 1200px; margin: 0 auto; padding: 28px 20px; }
@@ -212,10 +226,75 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- PAGE VIEW: HOME               -->
 <!-- ══════════════════════════════ -->
 <div id="page-home" class="page-view is-active">
-  <section class="hero-section" id="hero">
-    <h1>신선함이 다른<br>AGM마켓 🌿</h1>
-    <p>엄선된 국내외 식품을 합리적인 가격으로</p>
-    <span class="hero-badge">🚚 3만원 이상 무료배송</span>
+  <!-- ✅ Hero Banner Slider — 5 banners, clickable for GTM click tracking -->
+  <section class="hero-banner" id="hero">
+    <div class="banner-track" id="banner-track">
+
+      <!-- Banner 1 -->
+      <div class="banner-slide" id="banner-1" data-banner-id="1" data-banner-title="신라면 특가" style="background:#0f4526;">
+        <img class="banner-bg" src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=1200&h=400&fit=crop&auto=format" alt="">
+        <div class="banner-content">
+          <span class="banner-tag">🔥 오늘만 특가</span>
+          <h2 class="banner-title">신라면 40개입<br>박스 최대 40% 할인</h2>
+          <p class="banner-sub">국민 라면 신라면을 더 저렴하게! 오늘 자정까지</p>
+          <button class="banner-cta" id="banner-cta-1" onclick="filterCategory('라면/면류', document.querySelector('[data-category=\\'라면/면류\\']'))">라면 보러가기 →</button>
+        </div>
+      </div>
+
+      <!-- Banner 2 -->
+      <div class="banner-slide" id="banner-2" data-banner-id="2" data-banner-title="밀키트 신상" style="background:#1a3a5c;">
+        <img class="banner-bg" src="https://images.unsplash.com/photo-1547592180-85f173990554?w=1200&h=400&fit=crop&auto=format" alt="">
+        <div class="banner-content">
+          <span class="banner-tag">🆕 신상 출시</span>
+          <h2 class="banner-title">프리미엄 밀키트<br>갈비찜·부대찌개 신규입고</h2>
+          <p class="banner-sub">레스토랑 수준의 맛을 집에서 간편하게</p>
+          <button class="banner-cta" id="banner-cta-2" onclick="filterCategory('밀키트', document.querySelector('[data-category=\\'밀키트\\']'))">밀키트 보러가기 →</button>
+        </div>
+      </div>
+
+      <!-- Banner 3 -->
+      <div class="banner-slide" id="banner-3" data-banner-id="3" data-banner-title="음료 기획전" style="background:#7b3200;">
+        <img class="banner-bg" src="https://images.unsplash.com/photo-1581098365941-d569b5d3de08?w=1200&h=400&fit=crop&auto=format" alt="">
+        <div class="banner-content">
+          <span class="banner-tag">🥤 여름 기획전</span>
+          <h2 class="banner-title">탄산음료·생수·밀크티<br>3+1 묶음 할인</h2>
+          <p class="banner-sub">삼다수·코카콜라·데자와 한 번에 구매하면 1+1</p>
+          <button class="banner-cta" id="banner-cta-3" onclick="filterCategory('음료', document.querySelector('[data-category=\\'음료\\']'))">음료 보러가기 →</button>
+        </div>
+      </div>
+
+      <!-- Banner 4 -->
+      <div class="banner-slide" id="banner-4" data-banner-id="4" data-banner-title="과자 스낵 세일" style="background:#5c2d00;">
+        <img class="banner-bg" src="https://images.unsplash.com/photo-1621447504864-d8686e12698c?w=1200&h=400&fit=crop&auto=format" alt="">
+        <div class="banner-content">
+          <span class="banner-tag">🍪 주말 한정 SALE</span>
+          <h2 class="banner-title">새우깡·허니버터칩·초코파이<br>인기 과자 최대 30% OFF</h2>
+          <p class="banner-sub">주말 장보기 필수 아이템 한 번에 해결</p>
+          <button class="banner-cta" id="banner-cta-4" onclick="filterCategory('과자/스낵', document.querySelector('[data-category=\\'과자/스낵\\']'))">과자 보러가기 →</button>
+        </div>
+      </div>
+
+      <!-- Banner 5 -->
+      <div class="banner-slide" id="banner-5" data-banner-id="5" data-banner-title="즉석식품 기획전" style="background:#1a1a4e;">
+        <img class="banner-bg" src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=1200&h=400&fit=crop&auto=format" alt="">
+        <div class="banner-content">
+          <span class="banner-tag">⚡ 즉석식품 특집</span>
+          <h2 class="banner-title">햇반·카레·참치캔<br>간편식 패키지 구성</h2>
+          <p class="banner-sub">바쁜 일상에 딱 맞는 빠르고 맛있는 한 끼</p>
+          <button class="banner-cta" id="banner-cta-5" onclick="filterCategory('즉석식품', document.querySelector('[data-category=\\'즉석식품\\']'))">즉석식품 보러가기 →</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="banner-arrow prev" id="banner-prev" onclick="moveBanner(-1)" aria-label="이전">‹</button>
+    <button class="banner-arrow next" id="banner-next" onclick="moveBanner(1)" aria-label="다음">›</button>
+    <div class="banner-dots" id="banner-dots">
+      <button class="banner-dot is-active" id="banner-dot-0" onclick="goToBanner(0)"></button>
+      <button class="banner-dot" id="banner-dot-1" onclick="goToBanner(1)"></button>
+      <button class="banner-dot" id="banner-dot-2" onclick="goToBanner(2)"></button>
+      <button class="banner-dot" id="banner-dot-3" onclick="goToBanner(3)"></button>
+      <button class="banner-dot" id="banner-dot-4" onclick="goToBanner(4)"></button>
+    </div>
   </section>
   <main class="page-main">
     <h2 class="section-heading" id="product-list-title">전체 상품</h2>
@@ -274,106 +353,106 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 const PRODUCTS = [
   // 라면/면류
   { id:'p01', name:'농심 신라면', brand:'농심', category:'라면/면류', price:1200, originalPrice:1500,
-    image:'https://picsum.photos/seed/ramen/500/500',
+    image:'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=500&h=500&fit=crop&auto=format',
     badge:'베스트',
     description:'매콤한 쇠고기 육수와 쫄깃한 면발이 일품인 국민 라면. 1986년 출시 이후 40년 가까이 사랑받는 한국 라면의 대명사입니다.',
     weight:'120g', origin:'한국', shelf:'12개월' },
   { id:'p02', name:'삼양 불닭볶음면', brand:'삼양식품', category:'라면/면류', price:1500, originalPrice:1800,
-    image:'https://picsum.photos/seed/buldak/500/500',
+    image:'https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&h=500&fit=crop&auto=format',
     badge:'HOT',
     description:'스코빌 지수 4,404SHU의 극강의 매운맛. 전 세계 75개국에 수출되는 K-푸드 대표 아이콘입니다.',
     weight:'140g', origin:'한국', shelf:'12개월' },
   { id:'p03', name:'농심 짜파게티', brand:'농심', category:'라면/면류', price:1100, originalPrice:1400,
-    image:'https://picsum.photos/seed/jjapagetti/500/500',
+    image:'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=500&h=500&fit=crop&auto=format',
     badge:'베스트',
     description:'진한 자장 소스와 두꺼운 면발의 조화. 짜파구리로 더욱 유명해진 스테디셀러 볶음라면입니다.',
     weight:'140g', origin:'한국', shelf:'12개월' },
   { id:'p04', name:'오뚜기 진라면 매운맛', brand:'오뚜기', category:'라면/면류', price:1000, originalPrice:1200,
-    image:'https://picsum.photos/seed/jinramen/500/500',
+    image:'https://images.unsplash.com/photo-1547592180-85f173990554?w=500&h=500&fit=crop&auto=format',
     badge:'신상',
     description:'깊고 진한 국물과 탱탱한 면발. 부드러우면서도 알싸한 매운맛이 특징인 오뚜기의 대표 라면입니다.',
     weight:'120g', origin:'한국', shelf:'12개월' },
   // 과자/스낵
   { id:'p05', name:'롯데 초코파이', brand:'롯데제과', category:'과자/스낵', price:3800, originalPrice:4500,
-    image:'https://picsum.photos/seed/chocopie/500/500',
+    image:'https://images.unsplash.com/photo-1549007994-cb8bed9adfa9?w=500&h=500&fit=crop&auto=format',
     badge:'베스트',
     description:'촉촉한 케이크에 마시멜로우가 가득, 달콤한 초콜릿 코팅까지. 1974년부터 이어온 국민 과자입니다.',
     weight:'12개입 336g', origin:'한국', shelf:'6개월' },
   { id:'p06', name:'농심 새우깡', brand:'농심', category:'과자/스낵', price:1600, originalPrice:2000,
-    image:'https://picsum.photos/seed/saewookang/500/500',
+    image:'https://images.unsplash.com/photo-1621447504864-d8686e12698c?w=500&h=500&fit=crop&auto=format',
     badge:'베스트',
     description:'담백하고 고소한 새우 맛의 스낵. 손이 멈추지 않는 바삭한 식감으로 50년 넘게 사랑받는 스낵입니다.',
     weight:'90g', origin:'한국', shelf:'6개월' },
   { id:'p07', name:'오리온 포카칩 오리지널', brand:'오리온', category:'과자/스낵', price:1800, originalPrice:2200,
-    image:'https://picsum.photos/seed/pokachip/500/500',
+    image:'https://images.unsplash.com/photo-1566478989799-f57e1fe5e97e?w=500&h=500&fit=crop&auto=format',
     badge:'신상',
     description:'감자 본연의 맛을 살린 얇고 바삭한 감자칩. 라이트 소금 간이 딱 맞아 질리지 않는 맛입니다.',
     weight:'66g', origin:'한국', shelf:'6개월' },
   { id:'p08', name:'해태 허니버터칩', brand:'해태제과', category:'과자/스낵', price:2200, originalPrice:2600,
-    image:'https://picsum.photos/seed/honeybutter/500/500',
+    image:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&h=500&fit=crop&auto=format',
     badge:'HOT',
     description:'달콤한 꿀과 고소한 버터의 완벽한 조합. 출시와 동시에 품귀 현상을 일으킨 전설의 과자입니다.',
     weight:'60g', origin:'한국', shelf:'6개월' },
   // 음료
   { id:'p09', name:'코카콜라 355ml', brand:'코카콜라', category:'음료', price:1800, originalPrice:2000,
-    image:'https://picsum.photos/seed/cocacola/500/500',
+    image:'https://images.unsplash.com/photo-1629203851122-3726b55b1b9f?w=500&h=500&fit=crop&auto=format',
     badge:null,
     description:'세계 1등 탄산음료. 독특한 콜라 풍미와 상쾌한 탄산이 어우러진 맛으로 130년 역사를 자랑합니다.',
     weight:'355ml', origin:'한국', shelf:'12개월' },
   { id:'p10', name:'제주 삼다수 2L', brand:'제주개발공사', category:'음료', price:1200, originalPrice:1500,
-    image:'https://picsum.photos/seed/samdasoo/500/500',
+    image:'https://images.unsplash.com/photo-1559839914-17aae19cec71?w=500&h=500&fit=crop&auto=format',
     badge:'베스트',
     description:'제주 화산암반에서 18~20년 걸러진 청정수. 미네랄 균형이 뛰어나 한국 생수 시장 1위 제품입니다.',
     weight:'2L', origin:'제주도', shelf:'12개월' },
   { id:'p11', name:'동원 데자와 밀크티', brand:'동원F&B', category:'음료', price:1600, originalPrice:2000,
-    image:'https://picsum.photos/seed/dejawa/500/500',
+    image:'https://images.unsplash.com/photo-1556679343-c4306a37c58b?w=500&h=500&fit=crop&auto=format',
     badge:'신상',
     description:'진한 홍차와 고소한 우유의 황금 비율. 달콤하고 부드러운 맛으로 편의점 밀크티 대표 제품입니다.',
     weight:'500ml', origin:'한국', shelf:'12개월' },
   { id:'p12', name:'빙그레 바나나맛우유', brand:'빙그레', category:'음료', price:1500, originalPrice:1800,
-    image:'https://picsum.photos/seed/bananamilk/500/500',
+    image:'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&h=500&fit=crop&auto=format',
     badge:'베스트',
     description:'1974년 출시 이후 변하지 않은 맛. 달콤하고 고소한 바나나 향이 가득한 대한민국 대표 가공유입니다.',
     weight:'240ml', origin:'한국', shelf:'14일' },
   // 밀키트
   { id:'p13', name:'비비고 왕만두 밀키트', brand:'CJ제일제당', category:'밀키트', price:8900, originalPrice:11000,
-    image:'https://picsum.photos/seed/bibigo/500/500',
+    image:'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=500&h=500&fit=crop&auto=format',
     badge:'SALE',
     description:'육즙 가득한 왕만두와 진한 육수가 한 패키지에. 10분이면 완성되는 간편 만두 요리입니다.',
     weight:'540g (2인분)', origin:'한국', shelf:'냉동 9개월' },
   { id:'p14', name:'삼겹살 된장찌개 밀키트', brand:'프레시지', category:'밀키트', price:12900, originalPrice:16000,
-    image:'https://picsum.photos/seed/samgyupsal/500/500',
+    image:'https://images.unsplash.com/photo-1583224964978-2257b808f6b5?w=500&h=500&fit=crop&auto=format',
     badge:'HOT',
     description:'두툼한 삼겹살과 진한 된장 국물이 만나 완성되는 집밥의 맛. 손질된 재료로 15분 완성 가능합니다.',
     weight:'600g (2인분)', origin:'한국', shelf:'냉장 7일' },
   { id:'p15', name:'궁중 갈비찜 밀키트', brand:'마이셰프', category:'밀키트', price:18900, originalPrice:24000,
-    image:'https://picsum.photos/seed/galbijjim/500/500',
+    image:'https://images.unsplash.com/photo-1551183936-8892d4741a4f?w=500&h=500&fit=crop&auto=format',
     badge:'신상',
     description:'부드럽게 양념된 소갈비로 만드는 명절 요리 그대로의 맛. 특별한 날 더욱 빛나는 프리미엄 밀키트입니다.',
     weight:'800g (2-3인분)', origin:'한국', shelf:'냉장 5일' },
   { id:'p16', name:'부대찌개 밀키트', brand:'올리브마켓', category:'밀키트', price:9900, originalPrice:13000,
-    image:'https://picsum.photos/seed/budaejjigae/500/500',
+    image:'https://images.unsplash.com/photo-1607301405390-d831c242f59b?w=500&h=500&fit=crop&auto=format',
     badge:'베스트',
     description:'소시지, 햄, 두부, 김치가 한가득. 국민 찌개 부대찌개를 집에서 간편하게 즐겨보세요.',
     weight:'700g (2인분)', origin:'한국', shelf:'냉장 7일' },
   // 즉석식품
   { id:'p17', name:'CJ 햇반 210g', brand:'CJ제일제당', category:'즉석식품', price:1800, originalPrice:2200,
-    image:'https://picsum.photos/seed/hatban/500/500',
+    image:'https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=500&h=500&fit=crop&auto=format',
     badge:'베스트',
     description:'갓 지은 밥 맛 그대로. 2분이면 완성되는 간편 즉석밥. 1996년 출시 이후 즉석밥 시장을 개척한 제품입니다.',
     weight:'210g', origin:'한국', shelf:'13개월' },
   { id:'p18', name:'오뚜기 3분 카레 순한맛', brand:'오뚜기', category:'즉석식품', price:2000, originalPrice:2500,
-    image:'https://picsum.photos/seed/curry/500/500',
+    image:'https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=500&h=500&fit=crop&auto=format',
     badge:null,
     description:'3분이면 완성되는 황금빛 카레. 부드럽고 구수한 맛으로 남녀노소 즐길 수 있는 즉석 카레입니다.',
     weight:'200g', origin:'한국', shelf:'24개월' },
   { id:'p19', name:'동원 참치캔 150g', brand:'동원F&B', category:'즉석식품', price:2800, originalPrice:3500,
-    image:'https://picsum.photos/seed/tuna/500/500',
+    image:'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=500&h=500&fit=crop&auto=format',
     badge:'베스트',
     description:'깔끔하게 담긴 국내산 참치. 찌개, 볶음밥, 샐러드 등 다양하게 활용 가능한 만능 참치캔입니다.',
     weight:'150g', origin:'한국', shelf:'5년' },
   { id:'p20', name:'비비고 사골곰탕', brand:'CJ제일제당', category:'즉석식품', price:4500, originalPrice:5500,
-    image:'https://picsum.photos/seed/sagolgomtang/500/500',
+    image:'https://images.unsplash.com/photo-1547592180-85f173990554?w=500&h=500&fit=crop&auto=format',
     badge:'신상',
     description:'사골을 진하게 우려낸 깊은 국물. 파, 소금만 넣으면 완성되는 전통 사골곰탕 그대로의 맛입니다.',
     weight:'500g', origin:'한국', shelf:'24개월' },
@@ -766,6 +845,31 @@ function doSearch(event) {
 
   showPage('home');
 }
+
+// ────────────────────────────────
+// BANNER SLIDER
+// ────────────────────────────────
+let bannerIdx = 0;
+let bannerTimer = null;
+const BANNER_COUNT = 5;
+
+function goToBanner(idx) {
+  bannerIdx = (idx + BANNER_COUNT) % BANNER_COUNT;
+  document.getElementById('banner-track').style.transform = `translateX(-${bannerIdx * 100}%)`;
+  document.querySelectorAll('.banner-dot').forEach((d, i) => d.classList.toggle('is-active', i === bannerIdx));
+  resetBannerTimer();
+}
+
+function moveBanner(dir) {
+  goToBanner(bannerIdx + dir);
+}
+
+function resetBannerTimer() {
+  clearInterval(bannerTimer);
+  bannerTimer = setInterval(() => moveBanner(1), 4500);
+}
+
+resetBannerTimer();
 
 // ────────────────────────────────
 // INIT
