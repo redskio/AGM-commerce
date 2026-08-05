@@ -303,6 +303,31 @@
   .footer-sns { display: flex; gap: 10px; margin-top: 18px; }
   .btn-sns { width: 36px; height: 36px; border-radius: 50%; background: #3a4045; border: none; color: white; font-size: 15px; }
 
+  /* ── List toolbar (필터 / 정렬) ── */
+  .list-toolbar { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; }
+  .filter-group { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .filter-label { font-size: 12px; font-weight: 800; color: var(--muted); min-width: 44px; padding-top: 7px; letter-spacing: 0.5px; }
+  .btn-filter-price, .btn-filter-brand { border: 1px solid var(--border); background: white; color: var(--muted); border-radius: 20px; padding: 6px 14px; font-size: 12.5px; font-weight: 600; transition: all 0.15s; }
+  .btn-filter-price:hover, .btn-filter-brand:hover { border-color: var(--primary-light); color: var(--primary); }
+  .btn-filter-price.is-selected, .btn-filter-brand.is-selected { background: var(--primary); border-color: var(--primary); color: white; }
+  .brand-chips { display: flex; gap: 7px; flex-wrap: wrap; flex: 1; }
+
+  .toolbar-bottom { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .filter-check { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; }
+  .filter-check input { width: 15px; height: 15px; accent-color: var(--primary); cursor: pointer; }
+  .btn-reset-filter { background: none; border: 1px solid var(--border); color: var(--muted); border-radius: 8px; padding: 7px 13px; font-size: 12.5px; font-weight: 600; }
+  .btn-reset-filter:hover { border-color: var(--muted); color: var(--text); }
+  .sort-select { margin-left: auto; border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600; color: var(--text); background: white; cursor: pointer; outline: none; }
+  .sort-select:focus { border-color: var(--primary); }
+
+  .active-filter-summary { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
+  .active-filter-summary:empty { display: none; }
+  .filter-tag { display: inline-flex; align-items: center; gap: 6px; background: #eaf5ee; color: var(--primary-dark); border: 1px solid #c8e6d4; border-radius: 20px; padding: 5px 11px; font-size: 12px; font-weight: 700; }
+  .filter-tag button { background: none; border: none; color: var(--primary-dark); font-size: 14px; line-height: 1; padding: 0; }
+
+  .empty-result { text-align: center; padding: 60px 20px; color: var(--muted); }
+  .empty-result p { font-size: 15px; margin-bottom: 16px; }
+
   /* ── Scroll top / toast ── */
   #btn-scroll-top { position: fixed; right: 22px; bottom: 22px; width: 46px; height: 46px; border-radius: 50%; background: var(--primary); color: white; border: none; font-size: 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.25); z-index: 400; display: none; }
   #btn-scroll-top.is-visible { display: block; }
@@ -349,6 +374,14 @@
     .banner-arrow { width: 32px; height: 32px; font-size: 15px; }
     .banner-arrow.prev { left: 4px; }
     .banner-arrow.next { right: 4px; }
+
+    /* 필터/정렬 툴바 */
+    .list-toolbar { padding: 13px; }
+    .filter-group { gap: 7px; }
+    .filter-label { min-width: 100%; padding-top: 0; margin-bottom: 2px; }
+    .btn-filter-price, .btn-filter-brand { padding: 6px 11px; font-size: 12px; }
+    .sort-select { margin-left: 0; width: 100%; order: 3; }
+    .toolbar-bottom { gap: 10px; }
   }
   </style>
 </head>
@@ -599,8 +632,49 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- 전체 상품 -->
     <section id="section-all-products">
-      <h2 class="section-heading" id="product-list-title">전체 상품</h2>
+      <div class="section-head-row">
+        <h2 class="section-heading" id="product-list-title">전체 상품</h2>
+        <span id="product-count-label" style="font-size:13px;color:var(--muted);"></span>
+      </div>
+
+      <!-- 필터 / 정렬 툴바 -->
+      <div class="list-toolbar" id="list-toolbar">
+        <div class="filter-group" id="filter-price-group">
+          <span class="filter-label">가격</span>
+          <button class="btn-filter-price is-selected" data-price-range="all"    onclick="setPriceFilter('all', this)">전체</button>
+          <button class="btn-filter-price"             data-price-range="u2000"  onclick="setPriceFilter('u2000', this)">2천원 미만</button>
+          <button class="btn-filter-price"             data-price-range="2000to5000" onclick="setPriceFilter('2000to5000', this)">2천~5천원</button>
+          <button class="btn-filter-price"             data-price-range="5000to10000" onclick="setPriceFilter('5000to10000', this)">5천~1만원</button>
+          <button class="btn-filter-price"             data-price-range="o10000" onclick="setPriceFilter('o10000', this)">1만원 이상</button>
+        </div>
+
+        <div class="filter-group" id="filter-brand-group">
+          <span class="filter-label">브랜드</span>
+          <div class="brand-chips" id="brand-chip-list"></div>
+        </div>
+
+        <div class="toolbar-bottom">
+          <label class="filter-check" id="filter-discount-wrap">
+            <input type="checkbox" id="filter-discount-only" onchange="toggleDiscountFilter(this)"> 할인 상품만
+          </label>
+          <button class="btn-reset-filter" id="btn-reset-filter" onclick="resetFilters()">필터 초기화</button>
+          <select class="sort-select" id="sort-select" onchange="setSort(this.value)">
+            <option value="recommend">추천순</option>
+            <option value="popular">인기순 (리뷰 많은순)</option>
+            <option value="rating">평점 높은순</option>
+            <option value="price_asc">낮은 가격순</option>
+            <option value="price_desc">높은 가격순</option>
+            <option value="discount">할인율순</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="active-filter-summary" class="active-filter-summary"></div>
       <div class="product-grid" id="product-grid"></div>
+      <div id="empty-result" class="empty-result" style="display:none;">
+        <p>조건에 맞는 상품이 없습니다.</p>
+        <button class="btn-reset-filter" id="btn-reset-filter-empty" onclick="resetFilters()">필터 초기화</button>
+      </div>
     </section>
 
     <!-- 최근 본 상품 -->
@@ -949,7 +1023,7 @@ function updateWishlistCount() { document.getElementById('wishlist-count').textC
 function renderWishlistPage() {
   const list = wishlist.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
   document.getElementById('wishlist-grid').innerHTML = list.length
-    ? list.map(productCardHTML).join('')
+    ? list.map((p, i) => productCardHTML(p, i + 1)).join('')
     : '<div style="grid-column:1/-1;text-align:center;padding:70px;color:var(--muted);font-size:15px;">찜한 상품이 없습니다.</div>';
 }
 
@@ -1162,11 +1236,125 @@ function renderCategoryView(category) {
   titleEl.textContent = category === '전체' ? '전체 상품' : category;
   titleEl.removeAttribute('data-search-term');
   titleEl.removeAttribute('data-search-result-count');
-  renderProductGrid(category);
+  renderProductGrid(getCategoryProducts(category));
 }
 
-function getFilteredProducts(category) {
+// ────────────────────────────────
+// 필터 / 정렬
+// ────────────────────────────────
+const PRICE_RANGES = {
+  all:           { label: '전체',        test: () => true },
+  u2000:         { label: '2천원 미만',   test: p => p.price < 2000 },
+  '2000to5000':  { label: '2천~5천원',    test: p => p.price >= 2000 && p.price < 5000 },
+  '5000to10000': { label: '5천~1만원',    test: p => p.price >= 5000 && p.price < 10000 },
+  o10000:        { label: '1만원 이상',   test: p => p.price >= 10000 },
+};
+
+const SORT_OPTIONS = {
+  recommend:  { label: '추천순',      fn: null },
+  popular:    { label: '인기순',      fn: (a,b) => b.reviewCount - a.reviewCount },
+  rating:     { label: '평점 높은순',  fn: (a,b) => b.rating - a.rating },
+  price_asc:  { label: '낮은 가격순',  fn: (a,b) => a.price - b.price },
+  price_desc: { label: '높은 가격순',  fn: (a,b) => b.price - a.price },
+  discount:   { label: '할인율순',    fn: (a,b) => discountRate(b) - discountRate(a) },
+};
+
+let activePriceRange = 'all';
+let activeBrands = [];
+let discountOnly = false;
+let activeSort = 'recommend';
+
+function discountRate(p) {
+  return p.originalPrice ? Math.round((1 - p.price / p.originalPrice) * 100) : 0;
+}
+
+// 현재 카테고리(또는 검색 결과) 안에서 필터+정렬을 적용한 목록
+function getVisibleProducts(baseList) {
+  let list = baseList.filter(p =>
+    PRICE_RANGES[activePriceRange].test(p) &&
+    (!activeBrands.length || activeBrands.includes(p.brand)) &&
+    (!discountOnly || discountRate(p) > 0)
+  );
+  const sortFn = SORT_OPTIONS[activeSort].fn;
+  if (sortFn) list = [...list].sort(sortFn);
+  return list;
+}
+
+function getCategoryProducts(category) {
   return category === '전체' ? PRODUCTS : PRODUCTS.filter(p => p.category === category);
+}
+
+// 현재 화면(카테고리 or 검색)의 원본 목록
+function getBaseList() {
+  const term = document.getElementById('product-list-title').dataset.searchTerm;
+  return term ? searchProducts(term) : getCategoryProducts(currentCategory);
+}
+
+function setPriceFilter(range, btn) {
+  activePriceRange = range;
+  document.querySelectorAll('.btn-filter-price').forEach(b => b.classList.remove('is-selected'));
+  btn.classList.add('is-selected');
+  refreshList();
+}
+
+function toggleBrandFilter(brand, btn) {
+  activeBrands = activeBrands.includes(brand)
+    ? activeBrands.filter(b => b !== brand)
+    : [...activeBrands, brand];
+  btn.classList.toggle('is-selected', activeBrands.includes(brand));
+  refreshList();
+}
+
+function toggleDiscountFilter(input) {
+  discountOnly = input.checked;
+  refreshList();
+}
+
+function setSort(value) {
+  activeSort = value;
+  refreshList();
+}
+
+function resetFilters() {
+  activePriceRange = 'all';
+  activeBrands = [];
+  discountOnly = false;
+  activeSort = 'recommend';
+  document.querySelectorAll('.btn-filter-price').forEach(b =>
+    b.classList.toggle('is-selected', b.dataset.priceRange === 'all'));
+  document.querySelectorAll('.btn-filter-brand').forEach(b => b.classList.remove('is-selected'));
+  document.getElementById('filter-discount-only').checked = false;
+  document.getElementById('sort-select').value = 'recommend';
+  refreshList();
+}
+
+// 필터만 바뀐 경우 — 라우팅 없이 목록만 다시 그린다
+function refreshList() {
+  renderProductGrid(getBaseList());
+}
+
+// 현재 카테고리에 존재하는 브랜드만 칩으로 노출
+function renderBrandChips(baseList) {
+  const brands = [...new Set(baseList.map(p => p.brand))].sort();
+  activeBrands = activeBrands.filter(b => brands.includes(b)); // 카테고리 밖 브랜드는 해제
+  document.getElementById('brand-chip-list').innerHTML = brands.map(b => `
+    <button class="btn-filter-brand${activeBrands.includes(b) ? ' is-selected' : ''}"
+      data-brand="${b}" onclick="toggleBrandFilter('${b}', this)">${b}</button>`).join('');
+}
+
+function renderFilterSummary() {
+  const tags = [];
+  if (activePriceRange !== 'all')
+    tags.push({ k: 'price', label: PRICE_RANGES[activePriceRange].label, clear: "setPriceFilter('all', document.querySelector('[data-price-range=\\'all\\']'))" });
+  activeBrands.forEach(b =>
+    tags.push({ k: 'brand', label: b, clear: `toggleBrandFilter('${b}', document.querySelector('[data-brand=\\'${b}\\']'))` }));
+  if (discountOnly)
+    tags.push({ k: 'discount', label: '할인 상품만', clear: "document.getElementById('filter-discount-only').checked=false;toggleDiscountFilter(document.getElementById('filter-discount-only'))" });
+
+  document.getElementById('active-filter-summary').innerHTML = tags.map(t => `
+    <span class="filter-tag" data-filter-kind="${t.k}" data-filter-value="${t.label}">
+      ${t.label}<button onclick="${t.clear}" aria-label="${t.label} 해제">✕</button>
+    </span>`).join('');
 }
 
 function starString(rating) {
@@ -1174,10 +1362,10 @@ function starString(rating) {
   return '★★★★★'.slice(0, full) + '☆☆☆☆☆'.slice(0, 5 - full);
 }
 
-function productCardHTML(product) {
+function productCardHTML(product, position) {
   const wished = isWished(product.id);
   return `
-    <article class="product-card" data-product-id="${product.id}" data-product-name="${product.name}" data-product-category="${product.category}" data-product-price="${product.price}" data-product-brand="${product.brand}">
+    <article class="product-card" data-product-id="${product.id}" data-product-name="${product.name}" data-product-category="${product.category}" data-product-price="${product.price}" data-product-brand="${product.brand}" data-product-discount="${discountRate(product)}"${position ? ` data-list-position="${position}"` : ''}>
       <div class="product-thumbnail" onclick="showProductDetail('${product.id}')">
         <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src=FALLBACK_IMG">
         ${product.badge ? `<span class="product-badge ${BADGE_CLASS[product.badge]}">${product.badge}</span>` : ''}
@@ -1206,9 +1394,33 @@ function productCardHTML(product) {
     </article>`;
 }
 
-function renderProductGrid(category) {
-  const list = getFilteredProducts(category);
-  document.getElementById('product-grid').innerHTML = list.map(productCardHTML).join('');
+function renderProductGrid(baseList) {
+  const isSearch = !!document.getElementById('product-list-title').dataset.searchTerm;
+  const listName = isSearch ? 'search_results' : (currentCategory === '전체' ? 'all_products' : currentCategory);
+
+  // 칩을 먼저 그린다 — 목록에 없는 브랜드 선택을 여기서 해제하므로
+  // 필터를 적용하기 전에 실행해야 한 박자 늦게 반영되는 문제가 없다
+  renderBrandChips(baseList);
+  const visible = getVisibleProducts(baseList);
+  renderFilterSummary();
+
+  const grid = document.getElementById('product-grid');
+  grid.innerHTML = visible.map((p, i) => {
+    const html = productCardHTML(p, i + 1);
+    return isSearch ? html.replace('class="product-card"', 'class="product-card search-result-item"') : html;
+  }).join('');
+  // GTM이 view_item_list 파라미터로 읽을 값
+  grid.setAttribute('data-list-name', listName);
+  grid.setAttribute('data-sort-by', activeSort);
+  grid.setAttribute('data-filter-price', activePriceRange);
+  grid.setAttribute('data-filter-brands', activeBrands.join('|'));
+  grid.setAttribute('data-filter-discount-only', discountOnly);
+  grid.setAttribute('data-result-count', visible.length);
+
+  document.getElementById('product-count-label').textContent =
+    visible.length === baseList.length ? `총 ${visible.length}개` : `${visible.length}개 / 전체 ${baseList.length}개`;
+  document.getElementById('empty-result').style.display = visible.length ? 'none' : 'block';
+
   observeImpressions();
 }
 
@@ -1829,15 +2041,11 @@ function renderSearchView(query) {
   document.querySelectorAll('.category-tab').forEach(b => b.classList.remove('is-active'));
 
   const titleEl = document.getElementById('product-list-title');
-  titleEl.textContent = `"${query}" 검색 결과 ${results.length}건`;
+  titleEl.textContent = `"${query}" 검색 결과`;
   titleEl.setAttribute('data-search-term', query);
   titleEl.setAttribute('data-search-result-count', results.length);
 
-  document.getElementById('product-grid').innerHTML = results.length
-    ? results.map(p => productCardHTML(p).replace('class="product-card"', 'class="product-card search-result-item"')).join('')
-    : '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--muted);font-size:15px;" id="search-no-result">검색 결과가 없습니다.</div>';
-
-  observeImpressions();
+  renderProductGrid(results);  // 검색 결과에도 동일한 필터/정렬 적용
 }
 
 // ────────────────────────────────
