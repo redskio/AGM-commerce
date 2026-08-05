@@ -447,12 +447,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ══ CATEGORY BAR ══ -->
 <nav id="category-bar" class="category-bar">
   <div class="category-list">
-    <button class="category-tab is-active" data-category="전체"    onclick="filterCategory('전체', this)">전체</button>
-    <button class="category-tab"           data-category="라면/면류" onclick="filterCategory('라면/면류', this)">🍜 라면/면류</button>
-    <button class="category-tab"           data-category="과자/스낵" onclick="filterCategory('과자/스낵', this)">🍪 과자/스낵</button>
-    <button class="category-tab"           data-category="음료"      onclick="filterCategory('음료', this)">🥤 음료</button>
-    <button class="category-tab"           data-category="밀키트"    onclick="filterCategory('밀키트', this)">🥘 밀키트</button>
-    <button class="category-tab"           data-category="즉석식품"  onclick="filterCategory('즉석식품', this)">🍱 즉석식품</button>
+    <button class="category-tab is-active" data-category="전체"    onclick="filterCategory('전체')">전체</button>
+    <button class="category-tab"           data-category="라면/면류" onclick="filterCategory('라면/면류')">🍜 라면/면류</button>
+    <button class="category-tab"           data-category="과자/스낵" onclick="filterCategory('과자/스낵')">🍪 과자/스낵</button>
+    <button class="category-tab"           data-category="음료"      onclick="filterCategory('음료')">🥤 음료</button>
+    <button class="category-tab"           data-category="밀키트"    onclick="filterCategory('밀키트')">🥘 밀키트</button>
+    <button class="category-tab"           data-category="즉석식품"  onclick="filterCategory('즉석식품')">🍱 즉석식품</button>
   </div>
 </nav>
 
@@ -471,7 +471,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="banner-tag">🔥 오늘만 특가</span>
           <h2 class="banner-title">신라면 40개입<br>박스 최대 40% 할인</h2>
           <p class="banner-sub">국민 라면 신라면을 더 저렴하게! 오늘 자정까지</p>
-          <button class="banner-cta" id="banner-cta-1" onclick="filterCategory('라면/면류', document.querySelector('[data-category=\\'라면/면류\\']'))">라면 보러가기 →</button>
+          <button class="banner-cta" id="banner-cta-1" onclick="quickCategory('라면/면류')">라면 보러가기 →</button>
         </div>
       </div>
 
@@ -482,7 +482,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="banner-tag">🆕 신상 출시</span>
           <h2 class="banner-title">프리미엄 밀키트<br>갈비찜·부대찌개 신규입고</h2>
           <p class="banner-sub">레스토랑 수준의 맛을 집에서 간편하게</p>
-          <button class="banner-cta" id="banner-cta-2" onclick="filterCategory('밀키트', document.querySelector('[data-category=\\'밀키트\\']'))">밀키트 보러가기 →</button>
+          <button class="banner-cta" id="banner-cta-2" onclick="quickCategory('밀키트')">밀키트 보러가기 →</button>
         </div>
       </div>
 
@@ -493,7 +493,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="banner-tag">🥤 여름 기획전</span>
           <h2 class="banner-title">탄산음료·생수·밀크티<br>3+1 묶음 할인</h2>
           <p class="banner-sub">삼다수·코카콜라·데자와 한 번에 구매하면 1+1</p>
-          <button class="banner-cta" id="banner-cta-3" onclick="filterCategory('음료', document.querySelector('[data-category=\\'음료\\']'))">음료 보러가기 →</button>
+          <button class="banner-cta" id="banner-cta-3" onclick="quickCategory('음료')">음료 보러가기 →</button>
         </div>
       </div>
 
@@ -504,7 +504,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="banner-tag">🍪 주말 한정 SALE</span>
           <h2 class="banner-title">새우깡·허니버터칩·초코파이<br>인기 과자 최대 30% OFF</h2>
           <p class="banner-sub">주말 장보기 필수 아이템 한 번에 해결</p>
-          <button class="banner-cta" id="banner-cta-4" onclick="filterCategory('과자/스낵', document.querySelector('[data-category=\\'과자/스낵\\']'))">과자 보러가기 →</button>
+          <button class="banner-cta" id="banner-cta-4" onclick="quickCategory('과자/스낵')">과자 보러가기 →</button>
         </div>
       </div>
 
@@ -515,7 +515,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="banner-tag">⚡ 즉석식품 특집</span>
           <h2 class="banner-title">햇반·카레·참치캔<br>간편식 패키지 구성</h2>
           <p class="banner-sub">바쁜 일상에 딱 맞는 빠르고 맛있는 한 끼</p>
-          <button class="banner-cta" id="banner-cta-5" onclick="filterCategory('즉석식품', document.querySelector('[data-category=\\'즉석식품\\']'))">즉석식품 보러가기 →</button>
+          <button class="banner-cta" id="banner-cta-5" onclick="quickCategory('즉석식품')">즉석식품 보러가기 →</button>
         </div>
       </div>
     </div>
@@ -946,7 +946,6 @@ function toggleWishlist(productId, event) {
   if (document.getElementById('page-wishlist').classList.contains('is-active')) renderWishlistPage();
 }
 function updateWishlistCount() { document.getElementById('wishlist-count').textContent = wishlist.length; }
-function openWishlist() { renderWishlistPage(); showPage('wishlist'); }
 function renderWishlistPage() {
   const list = wishlist.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
   document.getElementById('wishlist-grid').innerHTML = list.length
@@ -984,9 +983,8 @@ function renderRecentlyViewed() {
 // PROMO / EVENT / FOOTER
 // ────────────────────────────────
 function quickCategory(cat) {
-  const tab = document.querySelector('.category-tab[data-category="' + cat + '"]');
-  filterCategory(cat, tab);
-  document.getElementById('section-all-products').scrollIntoView({ behavior: 'smooth' });
+  pendingScrollTo = 'section-all-products';
+  filterCategory(cat);
 }
 function handlePromo(promoId) {
   if (promoId === 'signup-coupon') { currentUser ? showToast('이미 로그인되어 있습니다') : openSignupModal(); }
@@ -1007,33 +1005,163 @@ document.addEventListener('click', (e) => {
   if (wrap && !wrap.contains(e.target)) document.getElementById('user-dropdown').classList.remove('is-open');
 });
 
+// ════════════════════════════════
+// HASH ROUTER
+// ════════════════════════════════
+// 경로 규칙
+//   #/                     홈
+//   #/category/{카테고리}   카테고리 목록
+//   #/search/{검색어}       검색 결과
+//   #/product/{상품ID}      상품 상세
+//   #/cart                 장바구니
+//   #/checkout             주문/결제
+//   #/order/{주문번호}      주문 완료
+//   #/wishlist             찜 목록
+//
+// GTM은 History Change 트리거로 이 해시 변경을 잡고,
+// body[data-page-type] / body[data-page-path] 를 변수로 읽으면 된다.
+
+let lastOrder = null;        // 주문 완료 화면 렌더링용
+let pendingScrollTo = null;  // 라우팅 직후 스크롤할 대상 id
+
+const PAGE_TITLES = {
+  home:      'AGM마켓 | 신선식품 전문 온라인몰',
+  category:  cat => `${cat} | AGM마켓`,
+  search:    q   => `"${q}" 검색 결과 | AGM마켓`,
+  product:   p   => `${p.name} | AGM마켓`,
+  cart:      '장바구니 | AGM마켓',
+  checkout:  '주문/결제 | AGM마켓',
+  order:     '주문 완료 | AGM마켓',
+  wishlist:  '찜한 상품 | AGM마켓',
+};
+
+function navigate(path, replace) {
+  const target = '#' + path;
+  if (location.hash === target) { handleRoute(); return; } // 같은 경로면 강제 재렌더
+  if (replace) location.replace(target); else location.hash = target;
+}
+
+function parseRoute() {
+  const raw = location.hash.replace(/^#/, '') || '/';
+  const parts = raw.split('/').filter(Boolean);
+  return {
+    path:  '/' + parts.join('/'),
+    name:  parts[0] || 'home',
+    param: parts[1] ? decodeURIComponent(parts[1]) : null,
+  };
+}
+
+function setPageMeta(type, path, title) {
+  document.title = title;
+  document.body.setAttribute('data-page-type', type);
+  document.body.setAttribute('data-page-path', path);
+}
+
+function handleRoute() {
+  const { name, param, path } = parseRoute();
+
+  switch (name) {
+    case 'home':
+      renderCategoryView('전체');
+      showPage('home');
+      setPageMeta('home', '/', PAGE_TITLES.home);
+      break;
+
+    case 'category': {
+      const cat = CATEGORIES.includes(param) ? param : '전체';
+      renderCategoryView(cat);
+      showPage('home');
+      setPageMeta('category', path, cat === '전체' ? PAGE_TITLES.home : PAGE_TITLES.category(cat));
+      break;
+    }
+
+    case 'search':
+      if (!param) { navigate('/', true); return; }
+      renderSearchView(param);
+      showPage('home');
+      setPageMeta('search', path, PAGE_TITLES.search(param));
+      break;
+
+    case 'product': {
+      const product = PRODUCTS.find(p => p.id === param);
+      if (!product) { navigate('/', true); return; }
+      renderProductDetail(product);
+      showPage('detail');
+      setPageMeta('product', path, PAGE_TITLES.product(product));
+      break;
+    }
+
+    case 'cart':
+      renderCart();
+      showPage('cart');
+      setPageMeta('cart', path, PAGE_TITLES.cart);
+      break;
+
+    case 'checkout':
+      if (!cart.length) { navigate('/cart', true); return; }  // 빈 장바구니로 결제 진입 차단
+      renderCheckout();
+      showPage('checkout');
+      setPageMeta('checkout', path, PAGE_TITLES.checkout);
+      break;
+
+    case 'order':
+      // 주문 데이터 없이 직접 접근하면 홈으로 (새로고침·북마크 대응)
+      if (!lastOrder || lastOrder.orderId !== param) { navigate('/', true); return; }
+      renderOrderComplete(lastOrder);
+      showPage('complete');
+      setPageMeta('order-complete', path, PAGE_TITLES.order);
+      break;
+
+    case 'wishlist':
+      renderWishlistPage();
+      showPage('wishlist');
+      setPageMeta('wishlist', path, PAGE_TITLES.wishlist);
+      break;
+
+    default:
+      navigate('/', true);
+      return;
+  }
+
+  if (pendingScrollTo) {
+    const el = document.getElementById(pendingScrollTo);
+    pendingScrollTo = null;
+    if (el) { el.scrollIntoView({ behavior: 'smooth' }); return; }
+  }
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener('hashchange', handleRoute);
+
 // ────────────────────────────────
-// PAGE NAVIGATION
+// PAGE NAVIGATION (뷰 전환은 라우터가 호출)
 // ────────────────────────────────
 function showPage(name) {
   document.querySelectorAll('.page-view').forEach(v => v.classList.remove('is-active'));
   document.getElementById('page-' + name).classList.add('is-active');
-  window.scrollTo(0, 0);
 }
 
-function goHome() {
-  showPage('home');
-  renderProductGrid(currentCategory);
-}
-
-function openCart() {
-  renderCart();
-  showPage('cart');
-}
+function goHome()      { navigate('/'); }
+function openCart()    { navigate('/cart'); }
+function openWishlist(){ navigate('/wishlist'); }
 
 // ────────────────────────────────
 // PRODUCT GRID
 // ────────────────────────────────
-function filterCategory(category, btn) {
+const CATEGORIES = ['전체','라면/면류','과자/스낵','음료','밀키트','즉석식품'];
+
+function filterCategory(category) {
+  navigate(category === '전체' ? '/' : '/category/' + encodeURIComponent(category));
+}
+
+function renderCategoryView(category) {
   currentCategory = category;
-  document.querySelectorAll('.category-tab').forEach(b => b.classList.remove('is-active'));
-  btn.classList.add('is-active');
-  document.getElementById('product-list-title').textContent = category === '전체' ? '전체 상품' : category;
+  document.querySelectorAll('.category-tab').forEach(b =>
+    b.classList.toggle('is-active', b.dataset.category === category));
+  const titleEl = document.getElementById('product-list-title');
+  titleEl.textContent = category === '전체' ? '전체 상품' : category;
+  titleEl.removeAttribute('data-search-term');
+  titleEl.removeAttribute('data-search-result-count');
   renderProductGrid(category);
 }
 
@@ -1168,8 +1296,10 @@ function observeImpressions() {
 // PRODUCT DETAIL
 // ────────────────────────────────
 function showProductDetail(productId) {
-  const product = PRODUCTS.find(p => p.id === productId);
-  if (!product) return;
+  navigate('/product/' + productId);
+}
+
+function renderProductDetail(product) {
   detailQty = 1;
   const wished = isWished(product.id);
   const related = PRODUCTS.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
@@ -1306,7 +1436,6 @@ function showProductDetail(productId) {
   `;
 
   pushRecentlyViewed(product.id);
-  showPage('detail');
 }
 
 function buildReviews(product) {
@@ -1515,10 +1644,7 @@ function renderCart() {
 // ────────────────────────────────
 // CHECKOUT
 // ────────────────────────────────
-function goCheckout() {
-  renderCheckout();
-  showPage('checkout');
-}
+function goCheckout() { navigate('/checkout'); }
 
 function renderCheckout() {
   const subtotal = getCartSubtotal();
@@ -1620,37 +1746,60 @@ function placeOrder() {
   const subtotal = getCartSubtotal();
   const shipping = getDeliveryFee(subtotal);
   const discount = getDiscount();
-  const total = Math.max(0, subtotal + shipping - discount);
-  const orderId = 'AGM-' + Date.now();
-  const itemCount = cart.reduce((s,c) => s + c.qty, 0);
+
+  lastOrder = {
+    orderId:   'AGM-' + Date.now(),
+    total:     Math.max(0, subtotal + shipping - discount),
+    subtotal, shipping, discount,
+    itemCount: cart.reduce((s, c) => s + c.qty, 0),
+    coupon:    appliedCoupon ? appliedCoupon.code : '',
+    payment:   selectedPayMethod,
+    delivery:  selectedDelivery,
+    recipient: recipientName,
+  };
 
   cart = [];
   appliedCoupon = null;
   updateCartCount();
   saveCart();
 
+  navigate('/order/' + lastOrder.orderId);
+}
+
+function renderOrderComplete(order) {
   document.getElementById('order-complete-container').innerHTML = `
     <div class="order-complete-icon">🎉</div>
     <h2 class="order-complete-title">주문이 완료되었습니다!</h2>
     <p class="order-complete-sub">주문해 주셔서 감사합니다.</p>
     <p class="order-complete-sub" style="font-size:13px;">평균 3~5일 내 배송 예정</p>
-    <div class="order-number" id="order-number" data-order-id="${orderId}" data-order-total="${total}" data-order-item-count="${itemCount}" data-payment-method="${selectedPayMethod}" data-delivery-type="${selectedDelivery}">${orderId}</div>
+    <div class="order-number" id="order-number"
+      data-order-id="${order.orderId}"
+      data-order-total="${order.total}"
+      data-order-subtotal="${order.subtotal}"
+      data-order-shipping="${order.shipping}"
+      data-order-discount="${order.discount}"
+      data-order-coupon="${order.coupon}"
+      data-order-item-count="${order.itemCount}"
+      data-payment-method="${order.payment}"
+      data-delivery-type="${order.delivery}">${order.orderId}</div>
     <div style="background:var(--bg);border-radius:10px;padding:16px 20px;margin-bottom:24px;text-align:left;font-size:14px;">
       <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
         <span style="color:var(--muted)">결제 금액</span>
-        <span id="order-complete-total" style="font-weight:800;color:var(--primary)">${total.toLocaleString()}원</span>
+        <span id="order-complete-total" style="font-weight:800;color:var(--primary)">${order.total.toLocaleString()}원</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+        <span style="color:var(--muted)">결제 방법</span>
+        <span id="order-complete-payment" style="font-weight:600">${order.payment}</span>
       </div>
       <div style="display:flex;justify-content:space-between;">
-        <span style="color:var(--muted)">결제 방법</span>
-        <span id="order-complete-payment" style="font-weight:600">${selectedPayMethod}</span>
+        <span style="color:var(--muted)">배송 방법</span>
+        <span id="order-complete-delivery" style="font-weight:600">${order.delivery}</span>
       </div>
     </div>
     <div class="order-complete-actions">
       <button class="btn-continue-shopping" id="btn-continue-after-order" onclick="goHome()">쇼핑 계속하기</button>
     </div>
   `;
-
-  showPage('complete');
 }
 
 // ────────────────────────────────
@@ -1658,14 +1807,26 @@ function placeOrder() {
 // ────────────────────────────────
 function doSearch(event) {
   if (event) event.preventDefault();
-  const query = document.getElementById('search-input').value.trim().toLowerCase();
-  if (!query) { renderProductGrid(currentCategory); return; }
+  const query = document.getElementById('search-input').value.trim();
+  if (!query) { navigate('/'); return; }
+  pendingScrollTo = 'section-all-products';
+  navigate('/search/' + encodeURIComponent(query));
+}
 
-  const results = PRODUCTS.filter(p =>
-    p.name.toLowerCase().includes(query) ||
-    p.brand.toLowerCase().includes(query) ||
-    p.category.toLowerCase().includes(query)
+function searchProducts(query) {
+  const q = query.toLowerCase();
+  return PRODUCTS.filter(p =>
+    p.name.toLowerCase().includes(q) ||
+    p.brand.toLowerCase().includes(q) ||
+    p.category.toLowerCase().includes(q)
   );
+}
+
+function renderSearchView(query) {
+  const results = searchProducts(query);
+
+  document.getElementById('search-input').value = query;
+  document.querySelectorAll('.category-tab').forEach(b => b.classList.remove('is-active'));
 
   const titleEl = document.getElementById('product-list-title');
   titleEl.textContent = `"${query}" 검색 결과 ${results.length}건`;
@@ -1677,8 +1838,6 @@ function doSearch(event) {
     : '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--muted);font-size:15px;" id="search-no-result">검색 결과가 없습니다.</div>';
 
   observeImpressions();
-  showPage('home');
-  document.getElementById('section-all-products').scrollIntoView({ behavior: 'smooth' });
 }
 
 // ────────────────────────────────
@@ -1715,9 +1874,9 @@ updateCartCount();
 updateWishlistCount();
 renderHomeSections();
 renderRecentlyViewed();
-renderProductGrid('전체');
 tickDealTimer();
 setInterval(tickDealTimer, 1000);
+handleRoute();   // 최초 진입 경로 처리 (딥링크·새로고침 대응)
 </script>
 </body>
 </html>
