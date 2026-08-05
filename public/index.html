@@ -303,6 +303,19 @@
   .footer-sns { display: flex; gap: 10px; margin-top: 18px; }
   .btn-sns { width: 36px; height: 36px; border-radius: 50%; background: #3a4045; border: none; color: white; font-size: 15px; }
 
+  /* ── 구매 옵션 (variant) ── */
+  .variant-picker { margin-bottom: 18px; }
+  .variant-label { font-size: 12px; font-weight: 800; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 8px; }
+  .variant-options { display: flex; flex-direction: column; gap: 8px; }
+  .btn-variant { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; border: 2px solid var(--border); background: white; border-radius: 10px; padding: 11px 14px; transition: all 0.15s; }
+  .btn-variant:hover { border-color: var(--primary-light); }
+  .btn-variant.is-selected { border-color: var(--primary); background: #f0faf4; }
+  .variant-name { font-size: 14px; font-weight: 700; color: var(--text); }
+  .variant-price { font-size: 14px; font-weight: 800; color: var(--primary); margin-left: auto; }
+  .variant-save { font-size: 11px; font-weight: 800; color: white; background: var(--accent); border-radius: 4px; padding: 2px 6px; }
+  .detail-line-total { margin-left: auto; font-size: 15px; font-weight: 800; color: var(--primary); }
+  .cart-item-variant { display: inline-block; font-size: 11px; font-weight: 700; color: var(--primary-dark); background: #eaf5ee; border-radius: 4px; padding: 2px 7px; margin-bottom: 5px; }
+
   /* ── List toolbar (필터 / 정렬) ── */
   .list-toolbar { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin-bottom: 14px; }
   .filter-group { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--border); }
@@ -895,6 +908,44 @@ PRODUCTS.forEach(p => {
   p.reviewCount = 120 + (n * 137) % 2400;
 });
 
+// ── 구매 옵션 (카테고리별 묶음 단위) ──
+// count = 낱개 수량, off = 묶음 추가 할인율
+const VARIANT_SETS = {
+  '라면/면류': [
+    { id:'single', label:'낱개 1개',    count:1,  off:0 },
+    { id:'pack5',  label:'5개입 묶음',  count:5,  off:0.05 },
+    { id:'box20',  label:'20개입 박스', count:20, off:0.12 },
+  ],
+  '과자/스낵': [
+    { id:'single', label:'1개',        count:1, off:0 },
+    { id:'pack3',  label:'3개 묶음',   count:3, off:0.05 },
+    { id:'pack6',  label:'6개 묶음',   count:6, off:0.10 },
+  ],
+  '음료': [
+    { id:'single', label:'1개',        count:1,  off:0 },
+    { id:'pack6',  label:'6개 묶음',   count:6,  off:0.07 },
+    { id:'box24',  label:'24개 박스',  count:24, off:0.15 },
+  ],
+  '밀키트': [
+    { id:'serve2', label:'2인분',      count:1, off:0 },
+    { id:'serve4', label:'4인분',      count:2, off:0.08 },
+  ],
+  '즉석식품': [
+    { id:'single', label:'1개',        count:1,  off:0 },
+    { id:'pack6',  label:'6개 묶음',   count:6,  off:0.08 },
+    { id:'pack12', label:'12개 묶음',  count:12, off:0.14 },
+  ],
+};
+
+PRODUCTS.forEach(p => {
+  p.variants = (VARIANT_SETS[p.category] || [{ id:'single', label:'기본', count:1, off:0 }])
+    .map(v => ({ ...v, price: Math.round(p.price * v.count * (1 - v.off) / 10) * 10 }));
+});
+
+function getVariant(product, variantId) {
+  return product.variants.find(v => v.id === variantId) || product.variants[0];
+}
+
 // 이미지 로드 실패 시 대체 이미지 (외부 의존 없는 inline SVG)
 const FALLBACK_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500"><rect width="500" height="500" fill="#eef2ee"/>' +
@@ -910,6 +961,7 @@ let recentlyViewed = [];
 let currentUser = null;
 let currentCategory = '전체';
 let detailQty = 1;
+let selectedVariantId = null;
 let selectedPayMethod = '신용/체크카드';
 let selectedDelivery = '새벽배송';
 let appliedCoupon = null;
@@ -1387,6 +1439,7 @@ function productCardHTML(product, position) {
           data-product-name="${product.name}"
           data-product-category="${product.category}"
           data-product-price="${product.price}"
+          data-product-variant="${product.variants[0].id}"
           onclick="addToCart('${product.id}', 1)">
           + 장바구니 담기
         </button>
@@ -1513,6 +1566,7 @@ function showProductDetail(productId) {
 
 function renderProductDetail(product) {
   detailQty = 1;
+  selectedVariantId = product.variants[0].id;   // 상세 진입 시 기본 옵션으로 초기화
   const wished = isWished(product.id);
   const related = PRODUCTS.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
 
@@ -1532,12 +1586,30 @@ function renderProductDetail(product) {
         <p class="detail-brand">${product.brand}</p>
         <h1 class="detail-product-name">${product.name}</h1>
         <div class="detail-price-box">
-          <p class="detail-price">${product.price.toLocaleString()}원</p>
+          <p class="detail-price" id="detail-price-display">${product.price.toLocaleString()}원</p>
           ${product.originalPrice ? `
             <div class="detail-price-row">
               <span class="detail-original-price">${product.originalPrice.toLocaleString()}원</span>
-              <span class="detail-discount">↓ ${Math.round((1 - product.price / product.originalPrice) * 100)}% 할인</span>
+              <span class="detail-discount">↓ ${discountRate(product)}% 할인</span>
             </div>` : ''}
+        </div>
+
+        <!-- 구매 옵션 -->
+        <div class="variant-picker" id="variant-picker" data-product-id="${product.id}">
+          <p class="variant-label">구매 옵션</p>
+          <div class="variant-options" id="variant-options">
+            ${product.variants.map((v, i) => `
+              <button class="btn-variant${i === 0 ? ' is-selected' : ''}"
+                data-product-id="${product.id}"
+                data-variant-id="${v.id}"
+                data-variant-label="${v.label}"
+                data-variant-price="${v.price}"
+                onclick="selectVariant('${product.id}', '${v.id}', this)">
+                <span class="variant-name">${v.label}</span>
+                <span class="variant-price">${v.price.toLocaleString()}원</span>
+                ${v.off ? `<span class="variant-save">${Math.round(v.off * 100)}% 추가할인</span>` : ''}
+              </button>`).join('')}
+          </div>
         </div>
         <p class="detail-description">${product.description}</p>
         <div class="detail-meta">
@@ -1547,21 +1619,24 @@ function renderProductDetail(product) {
           <span>📅 유통기한: <b>${product.shelf}</b></span>
         </div>
         <div class="quantity-control" id="detail-qty-control">
+          <span class="variant-label" style="margin:0 6px 0 0;">수량</span>
           <button class="btn-qty" id="btn-qty-minus" onclick="changeDetailQty(-1)">−</button>
           <span class="quantity-display" id="detail-quantity-display">1</span>
           <button class="btn-qty" id="btn-qty-plus" onclick="changeDetailQty(1)">+</button>
+          <span class="detail-line-total" id="detail-line-total">합계 ${product.variants[0].price.toLocaleString()}원</span>
         </div>
         <button class="btn-add-to-cart-detail"
           id="btn-add-to-cart-detail"
           data-product-id="${product.id}"
           data-product-name="${product.name}"
           data-product-category="${product.category}"
-          data-product-price="${product.price}"
+          data-product-price="${product.variants[0].price}"
+          data-product-variant="${product.variants[0].id}"
           onclick="addToCartFromDetail('${product.id}')">
           🛒 장바구니에 담기
         </button>
         <div class="detail-action-row">
-          <button class="btn-buy-now" id="btn-buy-now" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price}" onclick="buyNow('${product.id}')">⚡ 바로 구매하기</button>
+          <button class="btn-buy-now" id="btn-buy-now" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.variants[0].price}" data-product-variant="${product.variants[0].id}" onclick="buyNow('${product.id}')">⚡ 바로 구매하기</button>
           <button class="btn-icon-action${wished ? ' is-active' : ''}" id="btn-wishlist-detail" data-product-id="${product.id}" data-product-name="${product.name}" data-wishlist-state="${wished ? 'on' : 'off'}" onclick="toggleWishlist('${product.id}', event)">${wished ? '♥' : '♡'}</button>
         </div>
         <div class="share-row">
@@ -1676,7 +1751,7 @@ function switchDetailTab(tab, btn) {
 }
 
 function buyNow(productId) {
-  addToCart(productId, detailQty, true);
+  addToCart(productId, detailQty, true, selectedVariantId);
   goCheckout();
 }
 
@@ -1693,33 +1768,76 @@ function shareProduct(channel, productId) {
 function changeDetailQty(delta) {
   detailQty = Math.max(1, detailQty + delta);
   document.getElementById('detail-quantity-display').textContent = detailQty;
+  syncDetailPrice();
+}
+
+function selectVariant(productId, variantId, btn) {
+  selectedVariantId = variantId;
+  document.querySelectorAll('.btn-variant').forEach(b => b.classList.remove('is-selected'));
+  btn.classList.add('is-selected');
+  syncDetailPrice();
+}
+
+// 옵션·수량 변경을 가격 표시와 버튼 data 속성에 반영
+function syncDetailPrice() {
+  const picker = document.getElementById('variant-picker');
+  if (!picker) return;
+  const product = PRODUCTS.find(p => p.id === picker.dataset.productId);
+  if (!product) return;
+  const v = getVariant(product, selectedVariantId);
+
+  document.getElementById('detail-price-display').textContent = v.price.toLocaleString() + '원';
+  document.getElementById('detail-line-total').textContent = '합계 ' + (v.price * detailQty).toLocaleString() + '원';
+
+  ['btn-add-to-cart-detail', 'btn-buy-now'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    btn.dataset.productPrice = v.price;
+    btn.dataset.productVariant = v.id;
+    btn.dataset.productQuantity = detailQty;
+  });
 }
 
 function addToCartFromDetail(productId) {
-  addToCart(productId, detailQty);
+  addToCart(productId, detailQty, false, selectedVariantId);
 }
 
 // ────────────────────────────────
 // CART
 // ────────────────────────────────
-function addToCart(productId, qty, silent) {
-  const existing = cart.find(c => c.productId === productId);
+function addToCart(productId, qty, silent, variantId) {
+  const product = PRODUCTS.find(p => p.id === productId);
+  if (!product) return;
+  const variant = getVariant(product, variantId);
+
+  // 같은 상품이라도 옵션이 다르면 별도 항목으로 담는다
+  const existing = cart.find(c => c.productId === productId && c.variantId === variant.id);
   if (existing) existing.qty += qty;
-  else cart.push({ productId, qty });
+  else cart.push({ productId, variantId: variant.id, qty });
+
   updateCartCount();
   saveCart();
-  if (!silent) showToast('✓ 장바구니에 담았습니다!');
+  if (!silent) showToast(`✓ ${variant.label} 장바구니에 담았습니다!`);
 }
 
-function removeFromCart(productId) {
-  cart = cart.filter(c => c.productId !== productId);
+// 저장된 장바구니에서 상품/옵션을 복원 (옵션이 사라진 과거 데이터도 안전하게 처리)
+function cartLine(c) {
+  const product = PRODUCTS.find(p => p.id === c.productId);
+  if (!product) return null;
+  const variant = getVariant(product, c.variantId);
+  return { product, variant, qty: c.qty, lineTotal: variant.price * c.qty };
+}
+
+// 장바구니 항목은 상품+옵션 조합이 단위라 인덱스로 지목한다
+function removeFromCart(index) {
+  cart.splice(index, 1);
   updateCartCount();
   saveCart();
   renderCart();
 }
 
-function changeCartItemQty(productId, delta) {
-  const item = cart.find(c => c.productId === productId);
+function changeCartItemQty(index, delta) {
+  const item = cart[index];
   if (!item) return;
   item.qty = Math.max(1, item.qty + delta);
   updateCartCount();
@@ -1771,8 +1889,8 @@ function updateCartCount() {
 
 function getCartSubtotal() {
   return cart.reduce((sum, c) => {
-    const p = PRODUCTS.find(x => x.id === c.productId);
-    return sum + (p ? p.price * c.qty : 0);
+    const line = cartLine(c);
+    return sum + (line ? line.lineTotal : 0);
   }, 0);
 }
 
@@ -1795,26 +1913,34 @@ function renderCart() {
 
   container.innerHTML = `
     <div id="cart-item-list">
-      ${cart.map(c => {
-        const p = PRODUCTS.find(x => x.id === c.productId);
-        if (!p) return '';
+      ${cart.map((c, i) => {
+        const line = cartLine(c);
+        if (!line) return '';
+        const { product: p, variant: v } = line;
         return `
           <div class="cart-item-row"
             data-product-id="${p.id}"
             data-product-name="${p.name}"
-            data-product-price="${p.price}">
+            data-product-category="${p.category}"
+            data-product-brand="${p.brand}"
+            data-product-variant="${v.id}"
+            data-product-variant-label="${v.label}"
+            data-product-price="${v.price}"
+            data-line-total="${line.lineTotal}"
+            data-cart-index="${i}">
             <img class="cart-item-image" src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src=FALLBACK_IMG">
             <div class="cart-item-details">
               <p class="cart-item-brand">${p.brand}</p>
               <p class="cart-item-name">${p.name}</p>
-              <p class="cart-item-price">${(p.price * c.qty).toLocaleString()}원</p>
+              <p class="cart-item-variant">${v.label}</p>
+              <p class="cart-item-price">${line.lineTotal.toLocaleString()}원</p>
               <div class="cart-item-qty-control">
-                <button class="btn-cart-qty" data-action="decrease" data-product-id="${p.id}" onclick="changeCartItemQty('${p.id}', -1)">−</button>
+                <button class="btn-cart-qty" data-action="decrease" data-product-id="${p.id}" data-product-variant="${v.id}" onclick="changeCartItemQty(${i}, -1)">−</button>
                 <span class="cart-item-qty-display">${c.qty}</span>
-                <button class="btn-cart-qty" data-action="increase" data-product-id="${p.id}" onclick="changeCartItemQty('${p.id}', 1)">+</button>
+                <button class="btn-cart-qty" data-action="increase" data-product-id="${p.id}" data-product-variant="${v.id}" onclick="changeCartItemQty(${i}, 1)">+</button>
               </div>
             </div>
-            <button class="btn-remove-cart-item" data-product-id="${p.id}" onclick="removeFromCart('${p.id}')">✕</button>
+            <button class="btn-remove-cart-item" data-product-id="${p.id}" data-product-variant="${v.id}" onclick="removeFromCart(${i})">✕</button>
           </div>`;
       }).join('')}
     </div>
@@ -1919,12 +2045,14 @@ function renderCheckout() {
     <div class="order-summary-box" id="order-summary">
       <h3 class="order-summary-title">주문 상품 (${cart.length}종)</h3>
       ${cart.map(c => {
-        const p = PRODUCTS.find(x => x.id === c.productId);
+        const line = cartLine(c);
+        if (!line) return '';
+        const { product: p, variant: v } = line;
         return `
-          <div class="order-summary-item" data-product-id="${p.id}">
+          <div class="order-summary-item" data-product-id="${p.id}" data-product-variant="${v.id}" data-product-price="${v.price}" data-line-total="${line.lineTotal}">
             <img class="order-summary-item-img" src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src=FALLBACK_IMG">
-            <span class="order-summary-item-name">${p.name} ×${c.qty}</span>
-            <span class="order-summary-item-price">${(p.price * c.qty).toLocaleString()}원</span>
+            <span class="order-summary-item-name">${p.name}<br><small style="color:var(--muted)">${v.label} ×${c.qty}</small></span>
+            <span class="order-summary-item-price">${line.lineTotal.toLocaleString()}원</span>
           </div>`;
       }).join('')}
       <div class="order-total-section">
