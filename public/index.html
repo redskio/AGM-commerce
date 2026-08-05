@@ -5,12 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AGM마켓 | 신선식품 전문 온라인몰</title>
 
-  <!-- ✅ Google Tag Manager (GTM-5K4BTPKR → 실제 컨테이너 ID로 교체) -->
-  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  <!-- ✅ Google Tag Manager
+       기본 컨테이너 ID는 아래 DEFAULT_GTM_ID.
+       우측 상단 ⚙ 설정에서 다른 ID를 넣으면 localStorage에 저장되어
+       이후 로드부터 그 ID로 GTM을 불러온다. (파일을 고칠 필요 없음) -->
+  <script>
+  var DEFAULT_GTM_ID = 'GTM-5K4BTPKR';
+  var ACTIVE_GTM_ID = DEFAULT_GTM_ID;
+  try {
+    var saved = localStorage.getItem('agm_gtm_id');
+    if (saved && /^GTM-[A-Z0-9]+$/.test(saved)) ACTIVE_GTM_ID = saved;
+  } catch (e) { /* localStorage 차단 환경이면 기본값 사용 */ }
+
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-5K4BTPKR');</script>
+  })(window,document,'script','dataLayer',ACTIVE_GTM_ID);
+  </script>
   <!-- End Google Tag Manager -->
 
   <style>
@@ -303,6 +315,22 @@
   .footer-sns { display: flex; gap: 10px; margin-top: 18px; }
   .btn-sns { width: 36px; height: 36px; border-radius: 50%; background: #3a4045; border: none; color: white; font-size: 15px; }
 
+  /* ── 설정 모달 ── */
+  .btn-settings { font-size: 15px; line-height: 1; padding: 7px 11px; }
+  .modal-box-wide { max-width: 460px; max-height: 88vh; overflow-y: auto; }
+  .settings-section { border-top: 1px solid var(--border); padding-top: 18px; margin-top: 18px; }
+  .settings-section:first-of-type { border-top: none; padding-top: 4px; margin-top: 4px; }
+  .settings-heading { font-size: 15px; font-weight: 800; margin-bottom: 6px; }
+  .settings-desc { font-size: 12.5px; color: var(--muted); line-height: 1.65; margin-bottom: 12px; }
+  .settings-current { font-size: 13px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .settings-current b { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--primary-dark); }
+  .gtm-source-badge { font-size: 11px; font-weight: 800; border-radius: 4px; padding: 2px 7px; margin-left: auto; }
+  .gtm-source-badge.is-default { background: #e2e8e2; color: var(--muted); }
+  .gtm-source-badge.is-custom  { background: #d4edda; color: #155724; }
+  .settings-message { font-size: 12px; margin: 8px 0 10px; min-height: 16px; }
+  .settings-message:empty { margin: 0; min-height: 0; }
+  #input-gtm-id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; text-transform: uppercase; }
+
   /* ── 구매 옵션 (variant) ── */
   .variant-picker { margin-bottom: 18px; }
   .variant-label { font-size: 12px; font-weight: 800; color: var(--muted); letter-spacing: 0.5px; margin-bottom: 8px; }
@@ -393,14 +421,33 @@
     .filter-group { gap: 7px; }
     .filter-label { min-width: 100%; padding-top: 0; margin-bottom: 2px; }
     .btn-filter-price, .btn-filter-brand { padding: 6px 11px; font-size: 12px; }
-    .sort-select { margin-left: 0; width: 100%; order: 3; }
+    .sort-select { margin-left: 0; width: 100%; order: 3; padding: 11px 12px; }
     .toolbar-bottom { gap: 10px; }
+
+    /* 터치 타겟 확보 (모바일에서 누르기 쉬운 크기로) */
+    .btn-header, .btn-cart { min-height: 40px; }
+    .btn-filter-price, .btn-filter-brand, .btn-reset-filter { min-height: 38px; }
+    .btn-cart-qty { width: 38px; height: 38px; font-size: 17px; }
+    .btn-remove-cart-item { min-width: 42px; min-height: 42px; }
+    .btn-qty { width: 42px; height: 42px; }
+    .btn-back { min-height: 40px; display: inline-flex; align-items: center; }
+    .banner-cta { min-height: 40px; }
+    .footer-link { min-height: 34px; display: inline-flex; align-items: center; }
+    /* 점 자체는 작게 두되 눌리는 영역만 넓힌다 */
+    .breadcrumb button { min-height: 34px; }
+    .btn-modal-close { width: 40px; height: 40px; top: 8px; right: 8px; }
+    .banner-dots { gap: 0; bottom: 6px; }
+    .banner-dot { width: 32px; height: 32px; border-radius: 50%; background: none; position: relative; }
+    .banner-dot::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5); transition: background 0.2s, transform 0.2s; }
+    .banner-dot.is-active { background: none; transform: none; }
+    .banner-dot.is-active::after { background: white; transform: translate(-50%,-50%) scale(1.3); }
   }
   </style>
 </head>
 <body>
 
-<!-- ✅ GTM noscript (GTM-5K4BTPKR → 실제 컨테이너 ID로 교체) -->
+<!-- ✅ GTM noscript — JS가 꺼진 환경용이라 head의 동적 ID가 적용되지 않는다.
+     설정에서 HTML을 내려받으면 이 id도 함께 치환된다. -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5K4BTPKR"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
@@ -410,7 +457,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="site-logo" id="logo" onclick="goHome()">AGM<em>마켓</em></div>
     <form class="search-form" id="search-form" onsubmit="doSearch(event)">
       <input type="text" id="search-input" name="q" placeholder="신라면, 초코파이, 밀키트..." autocomplete="off">
-      <button type="submit" id="btn-search">🔍</button>
+      <button type="submit" id="btn-search" aria-label="검색">🔍</button>
     </form>
     <nav class="header-nav" id="header-nav">
       <div id="auth-area-logged-out">
@@ -432,6 +479,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         🛒 <span>장바구니</span>
         <span class="cart-item-count" id="cart-item-count">0</span>
       </button>
+      <button class="btn-header btn-settings" id="btn-settings" onclick="openSettings()" aria-label="설정" title="설정">⚙</button>
     </nav>
   </div>
 </header>
@@ -439,7 +487,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ══ LOGIN MODAL ══ -->
 <div class="modal-overlay" id="modal-login" onclick="if(event.target===this)closeModals()">
   <div class="modal-box">
-    <button class="btn-modal-close" id="btn-close-login" onclick="closeModals()">✕</button>
+    <button class="btn-modal-close" id="btn-close-login" onclick="closeModals()" aria-label="닫기">✕</button>
     <h2 class="modal-title">로그인</h2>
     <p class="modal-sub">AGM마켓에서 더 신선하게 쇼핑하세요</p>
     <form id="login-form" onsubmit="doLogin(event)">
@@ -465,7 +513,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ══ SIGNUP MODAL ══ -->
 <div class="modal-overlay" id="modal-signup" onclick="if(event.target===this)closeModals()">
   <div class="modal-box">
-    <button class="btn-modal-close" id="btn-close-signup" onclick="closeModals()">✕</button>
+    <button class="btn-modal-close" id="btn-close-signup" onclick="closeModals()" aria-label="닫기">✕</button>
     <h2 class="modal-title">회원가입</h2>
     <p class="modal-sub">지금 가입하면 5,000원 쿠폰 즉시 지급</p>
     <form id="signup-form" onsubmit="doSignup(event)">
@@ -487,6 +535,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <button class="btn-modal-submit" id="btn-signup-submit" type="submit">가입하고 쿠폰 받기</button>
     </form>
     <p class="modal-switch">이미 회원이신가요? <button id="btn-switch-to-login" onclick="openLoginModal()">로그인</button></p>
+  </div>
+</div>
+
+<!-- ══ SETTINGS MODAL ══ -->
+<div class="modal-overlay" id="modal-settings" onclick="if(event.target===this)closeModals()">
+  <div class="modal-box modal-box-wide">
+    <button class="btn-modal-close" id="btn-close-settings" onclick="closeModals()" aria-label="닫기">✕</button>
+    <h2 class="modal-title">설정</h2>
+    <p class="modal-sub">이 데모 사이트의 추적 설정을 바꾸고 파일을 내려받을 수 있습니다</p>
+
+    <!-- GTM 컨테이너 ID -->
+    <section class="settings-section" id="settings-gtm">
+      <h3 class="settings-heading">📊 GTM 컨테이너 ID</h3>
+      <p class="settings-desc">
+        본인 컨테이너 ID를 넣으면 <b>새로고침 후</b> 그 컨테이너로 태그가 로드됩니다.
+        브라우저에만 저장되므로 다른 사람에게는 영향이 없습니다.
+      </p>
+      <div class="settings-current">
+        현재 적용 중: <b id="current-gtm-id">-</b>
+        <span class="gtm-source-badge" id="gtm-source-badge"></span>
+      </div>
+      <div class="coupon-row">
+        <input type="text" id="input-gtm-id" name="gtm_id" placeholder="GTM-XXXXXXX"
+               autocomplete="off" spellcheck="false" aria-label="GTM 컨테이너 ID">
+        <button class="btn-apply-coupon" id="btn-save-gtm-id" onclick="saveGtmId()">저장</button>
+      </div>
+      <p id="gtm-message" class="settings-message"></p>
+      <button class="btn-reset-filter" id="btn-reset-gtm-id" onclick="resetGtmId()">기본값으로 되돌리기</button>
+    </section>
+
+    <!-- HTML 다운로드 -->
+    <section class="settings-section" id="settings-download">
+      <h3 class="settings-heading">💾 HTML 파일 다운로드</h3>
+      <p class="settings-desc">
+        이 사이트 전체가 담긴 단일 HTML 파일을 받습니다.
+        위에서 지정한 GTM ID가 파일 안에 기본값으로 박혀서 나가므로, 받아서 바로 올리면 됩니다.
+      </p>
+      <button class="btn-modal-submit" id="btn-download-html" onclick="downloadHtml()">
+        ⬇ index.html 다운로드
+      </button>
+      <p id="download-message" class="settings-message"></p>
+    </section>
+
+    <!-- 데모 데이터 초기화 -->
+    <section class="settings-section" id="settings-reset">
+      <h3 class="settings-heading">🧹 데모 데이터 초기화</h3>
+      <p class="settings-desc">
+        장바구니·찜·최근 본 상품·로그인 상태를 모두 지웁니다. GTM ID 설정은 유지됩니다.
+      </p>
+      <button class="btn-reset-filter" id="btn-reset-demo-data" onclick="resetDemoData()">데모 데이터 초기화</button>
+    </section>
   </div>
 </div>
 
@@ -569,11 +668,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button class="banner-arrow prev" id="banner-prev" onclick="moveBanner(-1)" aria-label="이전">‹</button>
     <button class="banner-arrow next" id="banner-next" onclick="moveBanner(1)" aria-label="다음">›</button>
     <div class="banner-dots" id="banner-dots">
-      <button class="banner-dot is-active" id="banner-dot-0" onclick="goToBanner(0)"></button>
-      <button class="banner-dot" id="banner-dot-1" onclick="goToBanner(1)"></button>
-      <button class="banner-dot" id="banner-dot-2" onclick="goToBanner(2)"></button>
-      <button class="banner-dot" id="banner-dot-3" onclick="goToBanner(3)"></button>
-      <button class="banner-dot" id="banner-dot-4" onclick="goToBanner(4)"></button>
+      <button class="banner-dot is-active" id="banner-dot-0" onclick="goToBanner(0)" aria-label="배너 1번으로 이동"></button>
+      <button class="banner-dot" id="banner-dot-1" onclick="goToBanner(1)" aria-label="배너 2번으로 이동"></button>
+      <button class="banner-dot" id="banner-dot-2" onclick="goToBanner(2)" aria-label="배너 3번으로 이동"></button>
+      <button class="banner-dot" id="banner-dot-3" onclick="goToBanner(3)" aria-label="배너 4번으로 이동"></button>
+      <button class="banner-dot" id="banner-dot-4" onclick="goToBanner(4)" aria-label="배너 5번으로 이동"></button>
     </div>
   </section>
   <main class="page-main">
@@ -774,9 +873,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div style="margin-top:14px;">© 2026 AGM마켓. All rights reserved.</div>
     </div>
     <div class="footer-sns" id="footer-sns">
-      <button class="btn-sns" data-sns="instagram" onclick="handleFooterLink('SNS-instagram')">📷</button>
-      <button class="btn-sns" data-sns="youtube"   onclick="handleFooterLink('SNS-youtube')">▶</button>
-      <button class="btn-sns" data-sns="blog"      onclick="handleFooterLink('SNS-blog')">✎</button>
+      <button class="btn-sns" data-sns="instagram" aria-label="instagram" onclick="handleFooterLink('SNS-instagram')">📷</button>
+      <button class="btn-sns" data-sns="youtube" aria-label="youtube"   onclick="handleFooterLink('SNS-youtube')">▶</button>
+      <button class="btn-sns" data-sns="blog" aria-label="blog"      onclick="handleFooterLink('SNS-blog')">✎</button>
     </div>
   </div>
 </footer>
@@ -1044,6 +1143,128 @@ function renderAuthState() {
     out.style.display = 'block'; inn.style.display = 'none';
     document.body.setAttribute('data-login-status', 'logged-out');
   }
+}
+
+// ════════════════════════════════
+// 설정 (GTM ID / 파일 다운로드 / 데이터 초기화)
+// ════════════════════════════════
+const GTM_ID_PATTERN = /^GTM-[A-Z0-9]{4,}$/;
+
+function getSavedGtmId() {
+  const v = localStorage.getItem('agm_gtm_id');
+  return v && GTM_ID_PATTERN.test(v) ? v : null;
+}
+
+// 지금 이 페이지가 실제로 로드한 ID (head 스니펫이 결정)
+function getActiveGtmId() {
+  return typeof ACTIVE_GTM_ID === 'string' ? ACTIVE_GTM_ID : DEFAULT_GTM_ID;
+}
+
+function openSettings() {
+  closeModals();
+  renderSettings();
+  document.getElementById('modal-settings').classList.add('is-open');
+}
+
+function renderSettings() {
+  const active = getActiveGtmId();
+  const custom = !!getSavedGtmId();
+
+  document.getElementById('current-gtm-id').textContent = active;
+  const badge = document.getElementById('gtm-source-badge');
+  badge.textContent = custom ? '사용자 지정' : '기본값';
+  badge.className = 'gtm-source-badge ' + (custom ? 'is-custom' : 'is-default');
+
+  document.getElementById('input-gtm-id').value = getSavedGtmId() || '';
+  setSettingsMessage('gtm-message', '', null);
+  setSettingsMessage('download-message', '', null);
+
+  document.body.setAttribute('data-gtm-id', active);
+  document.body.setAttribute('data-gtm-source', custom ? 'custom' : 'default');
+}
+
+function setSettingsMessage(id, text, ok) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text;
+  el.style.color = ok === null ? 'var(--muted)' : (ok ? 'var(--primary)' : '#c0392b');
+}
+
+function saveGtmId() {
+  const value = document.getElementById('input-gtm-id').value.trim().toUpperCase();
+
+  if (!value) { setSettingsMessage('gtm-message', '컨테이너 ID를 입력해주세요.', false); return; }
+  if (!GTM_ID_PATTERN.test(value)) {
+    setSettingsMessage('gtm-message', '형식이 올바르지 않습니다. 예: GTM-ABC1234', false);
+    return;
+  }
+  if (value === getActiveGtmId()) {
+    setSettingsMessage('gtm-message', '이미 적용 중인 ID입니다.', null);
+    return;
+  }
+
+  localStorage.setItem('agm_gtm_id', value);
+  setSettingsMessage('gtm-message', `✓ ${value} 저장됨 — 새로고침하면 적용됩니다.`, true);
+  showToast('GTM ID가 저장되었습니다. 새로고침 중...');
+  setTimeout(() => location.reload(), 900);   // GTM은 로드 시점에 결정되므로 재로드 필요
+}
+
+function resetGtmId() {
+  if (!getSavedGtmId()) {
+    setSettingsMessage('gtm-message', '이미 기본값을 사용 중입니다.', null);
+    return;
+  }
+  localStorage.removeItem('agm_gtm_id');
+  setSettingsMessage('gtm-message', `기본값(${DEFAULT_GTM_ID})으로 되돌립니다. 새로고침 중...`, true);
+  setTimeout(() => location.reload(), 900);
+}
+
+// 원본 HTML을 받아서 현재 GTM ID를 기본값 자리에 심어 내려준다
+async function downloadHtml() {
+  const btn = document.getElementById('btn-download-html');
+  const active = getActiveGtmId();
+  btn.disabled = true;
+  setSettingsMessage('download-message', '파일을 준비하는 중...', null);
+
+  try {
+    // 렌더된 DOM이 아니라 서버의 원본 파일을 받아야 깨끗한 사본이 된다
+    const res = await fetch('index.html', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    let html = await res.text();
+
+    if (!/var DEFAULT_GTM_ID = '/.test(html)) throw new Error('원본 파일 형식을 확인할 수 없습니다');
+
+    // 기본 ID와 noscript iframe의 ID를 현재 ID로 치환
+    html = html
+      .replace(/var DEFAULT_GTM_ID = '[^']*'/, `var DEFAULT_GTM_ID = '${active}'`)
+      .replace(/ns\.html\?id=GTM-[A-Z0-9]+/g, `ns.html?id=${active}`);
+
+    const url = URL.createObjectURL(new Blob([html], { type: 'text/html;charset=utf-8' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'agm-market.html';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+
+    setSettingsMessage('download-message', `✓ 다운로드 완료 — GTM ID ${active} 적용됨`, true);
+    showToast('✓ HTML 파일을 내려받았습니다');
+  } catch (err) {
+    setSettingsMessage('download-message', '다운로드 실패: ' + err.message, false);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+function resetDemoData() {
+  if (!confirm('장바구니·찜·최근 본 상품·로그인 상태를 모두 지웁니다. 계속할까요?')) return;
+  ['agm_cart', 'agm_wishlist', 'agm_recent', 'agm_user'].forEach(k => localStorage.removeItem(k));
+  cart = []; wishlist = []; recentlyViewed = []; currentUser = null; appliedCoupon = null;
+  updateCartCount(); updateWishlistCount(); renderAuthState(); renderRecentlyViewed();
+  closeModals();
+  navigate('/');
+  showToast('데모 데이터를 초기화했습니다');
 }
 
 // ────────────────────────────────
@@ -1421,7 +1642,7 @@ function productCardHTML(product, position) {
       <div class="product-thumbnail" onclick="showProductDetail('${product.id}')">
         <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src=FALLBACK_IMG">
         ${product.badge ? `<span class="product-badge ${BADGE_CLASS[product.badge]}">${product.badge}</span>` : ''}
-        <button class="btn-wishlist${wished ? ' is-active' : ''}" data-product-id="${product.id}" data-product-name="${product.name}" data-wishlist-state="${wished ? 'on' : 'off'}" onclick="toggleWishlist('${product.id}', event)">${wished ? '♥' : '♡'}</button>
+        <button class="btn-wishlist${wished ? ' is-active' : ''}" data-product-id="${product.id}" data-product-name="${product.name}" data-wishlist-state="${wished ? 'on' : 'off'}" onclick="toggleWishlist('${product.id}', event)" aria-label="찜하기">${wished ? '♥' : '♡'}</button>
       </div>
       <div class="product-info">
         <p class="product-brand">${product.brand}</p>
@@ -1620,9 +1841,9 @@ function renderProductDetail(product) {
         </div>
         <div class="quantity-control" id="detail-qty-control">
           <span class="variant-label" style="margin:0 6px 0 0;">수량</span>
-          <button class="btn-qty" id="btn-qty-minus" onclick="changeDetailQty(-1)">−</button>
+          <button class="btn-qty" id="btn-qty-minus" onclick="changeDetailQty(-1)" aria-label="수량 줄이기">−</button>
           <span class="quantity-display" id="detail-quantity-display">1</span>
-          <button class="btn-qty" id="btn-qty-plus" onclick="changeDetailQty(1)">+</button>
+          <button class="btn-qty" id="btn-qty-plus" onclick="changeDetailQty(1)" aria-label="수량 늘리기">+</button>
           <span class="detail-line-total" id="detail-line-total">합계 ${product.variants[0].price.toLocaleString()}원</span>
         </div>
         <button class="btn-add-to-cart-detail"
@@ -1637,7 +1858,7 @@ function renderProductDetail(product) {
         </button>
         <div class="detail-action-row">
           <button class="btn-buy-now" id="btn-buy-now" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.variants[0].price}" data-product-variant="${product.variants[0].id}" onclick="buyNow('${product.id}')">⚡ 바로 구매하기</button>
-          <button class="btn-icon-action${wished ? ' is-active' : ''}" id="btn-wishlist-detail" data-product-id="${product.id}" data-product-name="${product.name}" data-wishlist-state="${wished ? 'on' : 'off'}" onclick="toggleWishlist('${product.id}', event)">${wished ? '♥' : '♡'}</button>
+          <button class="btn-icon-action${wished ? ' is-active' : ''}" id="btn-wishlist-detail" data-product-id="${product.id}" data-product-name="${product.name}" data-wishlist-state="${wished ? 'on' : 'off'}" onclick="toggleWishlist('${product.id}', event)" aria-label="찜하기">${wished ? '♥' : '♡'}</button>
         </div>
         <div class="share-row">
           <button class="btn-share" id="btn-share-kakao" data-share-channel="kakao" data-product-id="${product.id}" onclick="shareProduct('kakao','${product.id}')">💬 카카오톡 공유</button>
@@ -1935,12 +2156,12 @@ function renderCart() {
               <p class="cart-item-variant">${v.label}</p>
               <p class="cart-item-price">${line.lineTotal.toLocaleString()}원</p>
               <div class="cart-item-qty-control">
-                <button class="btn-cart-qty" data-action="decrease" data-product-id="${p.id}" data-product-variant="${v.id}" onclick="changeCartItemQty(${i}, -1)">−</button>
+                <button class="btn-cart-qty" data-action="decrease" data-product-id="${p.id}" data-product-variant="${v.id}" onclick="changeCartItemQty(${i}, -1)" aria-label="수량 줄이기">−</button>
                 <span class="cart-item-qty-display">${c.qty}</span>
-                <button class="btn-cart-qty" data-action="increase" data-product-id="${p.id}" data-product-variant="${v.id}" onclick="changeCartItemQty(${i}, 1)">+</button>
+                <button class="btn-cart-qty" data-action="increase" data-product-id="${p.id}" data-product-variant="${v.id}" onclick="changeCartItemQty(${i}, 1)" aria-label="수량 늘리기">+</button>
               </div>
             </div>
-            <button class="btn-remove-cart-item" data-product-id="${p.id}" data-product-variant="${v.id}" onclick="removeFromCart(${i})">✕</button>
+            <button class="btn-remove-cart-item" data-product-id="${p.id}" data-product-variant="${v.id}" onclick="removeFromCart(${i})" aria-label="장바구니에서 삭제">✕</button>
           </div>`;
       }).join('')}
     </div>
@@ -2205,6 +2426,9 @@ resetBannerTimer();
 // INIT
 // ────────────────────────────────
 loadState();
+// GTM ID를 body 속성으로 노출 (GTM/디버깅에서 어떤 컨테이너가 붙었는지 확인용)
+document.body.setAttribute('data-gtm-id', getActiveGtmId());
+document.body.setAttribute('data-gtm-source', getSavedGtmId() ? 'custom' : 'default');
 renderAuthState();
 updateCartCount();
 updateWishlistCount();
