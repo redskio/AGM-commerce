@@ -11,11 +11,23 @@
        이후 로드부터 그 ID로 GTM을 불러온다. (파일을 고칠 필요 없음) -->
   <script>
   var DEFAULT_GTM_ID = 'GTM-5K4BTPKR';
-  var ACTIVE_GTM_ID = DEFAULT_GTM_ID;
-  try {
-    var saved = localStorage.getItem('agm_gtm_id');
-    if (saved && /^GTM-[A-Z0-9]+$/.test(saved)) ACTIVE_GTM_ID = saved;
-  } catch (e) { /* localStorage 차단 환경이면 기본값 사용 */ }
+  var ACTIVE_GTM_ID  = DEFAULT_GTM_ID;
+  var GTM_ID_SOURCE  = 'default';   // default | saved | url
+
+  // 우선순위: URL 파라미터 > 브라우저 저장값 > 파일 기본값
+  // ?gtm=GTM-XXXXXXX 를 붙인 링크는 누구에게 보내도 그 컨테이너로 로드된다.
+  (function () {
+    var valid = /^GTM-[A-Z0-9]{4,}$/;
+    var fromUrl = (location.search.match(/[?&]gtm=([^&#]+)/) || [])[1];
+    if (fromUrl) {
+      fromUrl = decodeURIComponent(fromUrl).toUpperCase();
+      if (valid.test(fromUrl)) { ACTIVE_GTM_ID = fromUrl; GTM_ID_SOURCE = 'url'; return; }
+    }
+    try {
+      var saved = localStorage.getItem('agm_gtm_id');
+      if (saved && valid.test(saved)) { ACTIVE_GTM_ID = saved; GTM_ID_SOURCE = 'saved'; }
+    } catch (e) { /* localStorage 차단 환경이면 기본값 사용 */ }
+  })();
 
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -549,8 +561,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <section class="settings-section" id="settings-gtm">
       <h3 class="settings-heading">📊 GTM 컨테이너 ID</h3>
       <p class="settings-desc">
-        본인 컨테이너 ID를 넣으면 <b>새로고침 후</b> 그 컨테이너로 태그가 로드됩니다.
-        브라우저에만 저장되므로 다른 사람에게는 영향이 없습니다.
+        적용 우선순위는 <b>링크 파라미터 › 이 브라우저 저장값 › 파일 기본값</b> 순입니다.
       </p>
       <div class="settings-current">
         현재 적용 중: <b id="current-gtm-id">-</b>
@@ -563,6 +574,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <p id="gtm-message" class="settings-message"></p>
       <button class="btn-reset-filter" id="btn-reset-gtm-id" onclick="resetGtmId()">기본값으로 되돌리기</button>
+    </section>
+
+    <!-- 공유 링크 -->
+    <section class="settings-section" id="settings-share">
+      <h3 class="settings-heading">🔗 다른 사람과 공유하기</h3>
+      <p class="settings-desc">
+        저장값은 <b>이 브라우저에만</b> 남습니다. 아래 링크를 보내면 받는 사람도
+        같은 컨테이너로 사이트를 열게 되므로, 재배포 없이 팀원과 함께 테스트할 수 있습니다.
+      </p>
+      <div class="coupon-row">
+        <input type="text" id="share-link" readonly aria-label="공유 링크" onclick="this.select()">
+        <button class="btn-apply-coupon" id="btn-copy-share-link" onclick="copyShareLink()">복사</button>
+      </div>
+      <p id="share-message" class="settings-message"></p>
+      <p class="settings-desc" style="margin:0;">
+        사이트 자체의 <b>영구 기본값</b>을 바꾸려면 아래에서 HTML을 받아 다시 배포하세요.
+      </p>
     </section>
 
     <!-- HTML 다운로드 -->
@@ -1166,21 +1194,53 @@ function openSettings() {
   document.getElementById('modal-settings').classList.add('is-open');
 }
 
+const GTM_SOURCE_LABEL = { url: '링크로 지정됨', saved: '이 브라우저에 저장됨', default: '파일 기본값' };
+
+function getGtmSource() {
+  return typeof GTM_ID_SOURCE === 'string' ? GTM_ID_SOURCE : 'default';
+}
+
 function renderSettings() {
   const active = getActiveGtmId();
-  const custom = !!getSavedGtmId();
+  const source = getGtmSource();
 
   document.getElementById('current-gtm-id').textContent = active;
   const badge = document.getElementById('gtm-source-badge');
-  badge.textContent = custom ? '사용자 지정' : '기본값';
-  badge.className = 'gtm-source-badge ' + (custom ? 'is-custom' : 'is-default');
+  badge.textContent = GTM_SOURCE_LABEL[source];
+  badge.className = 'gtm-source-badge ' + (source === 'default' ? 'is-default' : 'is-custom');
 
-  document.getElementById('input-gtm-id').value = getSavedGtmId() || '';
-  setSettingsMessage('gtm-message', '', null);
+  document.getElementById('input-gtm-id').value = getSavedGtmId() || (source === 'url' ? active : '');
+  document.getElementById('share-link').value = buildShareLink(active);
+
+  setSettingsMessage('gtm-message', source === 'url'
+    ? '지금은 링크의 ?gtm= 값이 우선 적용 중입니다. 저장값을 쓰려면 주소에서 ?gtm=... 을 지우세요.'
+    : '', null);
   setSettingsMessage('download-message', '', null);
+  setSettingsMessage('share-message', '', null);
 
   document.body.setAttribute('data-gtm-id', active);
-  document.body.setAttribute('data-gtm-source', custom ? 'custom' : 'default');
+  document.body.setAttribute('data-gtm-source', source);
+}
+
+// ?gtm= 파라미터가 붙은 공유용 절대 URL (해시 경로는 유지)
+function buildShareLink(gtmId) {
+  const url = new URL(location.href);
+  url.searchParams.set('gtm', gtmId);
+  return url.toString();
+}
+
+async function copyShareLink() {
+  const input = document.getElementById('share-link');
+  const link = input.value;
+  try {
+    if (navigator.clipboard) await navigator.clipboard.writeText(link);
+    else { input.select(); document.execCommand('copy'); }
+    setSettingsMessage('share-message', '✓ 링크를 복사했습니다', true);
+    showToast('🔗 공유 링크를 복사했습니다');
+  } catch (e) {
+    input.select();
+    setSettingsMessage('share-message', '복사에 실패했습니다. 위 주소를 직접 선택해 복사하세요.', false);
+  }
 }
 
 function setSettingsMessage(id, text, ok) {
@@ -1198,7 +1258,7 @@ function saveGtmId() {
     setSettingsMessage('gtm-message', '형식이 올바르지 않습니다. 예: GTM-ABC1234', false);
     return;
   }
-  if (value === getActiveGtmId()) {
+  if (value === getActiveGtmId() && getSavedGtmId() === value) {
     setSettingsMessage('gtm-message', '이미 적용 중인 ID입니다.', null);
     return;
   }
@@ -1206,17 +1266,29 @@ function saveGtmId() {
   localStorage.setItem('agm_gtm_id', value);
   setSettingsMessage('gtm-message', `✓ ${value} 저장됨 — 새로고침하면 적용됩니다.`, true);
   showToast('GTM ID가 저장되었습니다. 새로고침 중...');
-  setTimeout(() => location.reload(), 900);   // GTM은 로드 시점에 결정되므로 재로드 필요
+  // 링크의 ?gtm= 이 남아 있으면 저장값보다 우선하므로 떼고 다시 연다
+  setTimeout(() => reloadWithoutGtmParam(), 900);
 }
 
 function resetGtmId() {
-  if (!getSavedGtmId()) {
+  if (!getSavedGtmId() && getGtmSource() === 'default') {
     setSettingsMessage('gtm-message', '이미 기본값을 사용 중입니다.', null);
     return;
   }
   localStorage.removeItem('agm_gtm_id');
   setSettingsMessage('gtm-message', `기본값(${DEFAULT_GTM_ID})으로 되돌립니다. 새로고침 중...`, true);
-  setTimeout(() => location.reload(), 900);
+  setTimeout(() => reloadWithoutGtmParam(), 900);
+}
+
+// GTM은 페이지 로드 시점에 결정되므로 재로드가 필요하다
+function reloadWithoutGtmParam() {
+  const url = new URL(location.href);
+  if (url.searchParams.has('gtm')) {
+    url.searchParams.delete('gtm');
+    location.replace(url.toString());
+  } else {
+    location.reload();
+  }
 }
 
 // 원본 HTML을 받아서 현재 GTM ID를 기본값 자리에 심어 내려준다
@@ -2428,7 +2500,7 @@ resetBannerTimer();
 loadState();
 // GTM ID를 body 속성으로 노출 (GTM/디버깅에서 어떤 컨테이너가 붙었는지 확인용)
 document.body.setAttribute('data-gtm-id', getActiveGtmId());
-document.body.setAttribute('data-gtm-source', getSavedGtmId() ? 'custom' : 'default');
+document.body.setAttribute('data-gtm-source', getGtmSource());
 renderAuthState();
 updateCartCount();
 updateWishlistCount();
