@@ -178,12 +178,177 @@
   .order-complete-actions { display: flex; gap: 12px; justify-content: center; }
   .btn-continue-shopping { border: 2px solid var(--primary); color: var(--primary); background: white; padding: 12px 24px; border-radius: 10px; font-size: 15px; font-weight: 700; }
 
+  /* ── Auth / Header extras ── */
+  .btn-header { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 7px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+  .btn-header:hover { background: rgba(255,255,255,0.28); }
+  .user-menu-wrap { position: relative; }
+  .user-dropdown { display: none; position: absolute; right: 0; top: 42px; background: white; border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,0.18); min-width: 160px; overflow: hidden; z-index: 300; }
+  .user-dropdown.is-open { display: block; }
+  .user-dropdown button { display: block; width: 100%; text-align: left; background: none; border: none; padding: 11px 16px; font-size: 13px; color: var(--text); font-weight: 600; }
+  .user-dropdown button:hover { background: var(--bg); }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 500; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.is-open { display: flex; }
+  .modal-box { background: white; border-radius: 16px; padding: 28px; width: 100%; max-width: 380px; position: relative; }
+  .modal-title { font-size: 20px; font-weight: 900; margin-bottom: 6px; }
+  .modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+  .btn-modal-close { position: absolute; top: 14px; right: 14px; background: none; border: none; font-size: 20px; color: var(--muted); }
+  .btn-modal-submit { width: 100%; background: var(--primary); color: white; border: none; padding: 13px; border-radius: 10px; font-size: 15px; font-weight: 800; margin-top: 6px; }
+  .social-login-row { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+  .btn-social { width: 100%; border: none; padding: 12px; border-radius: 10px; font-size: 14px; font-weight: 700; }
+  .btn-social-kakao { background: #FEE500; color: #191600; }
+  .btn-social-naver { background: #03C75A; color: white; }
+  .modal-divider { text-align: center; font-size: 12px; color: var(--muted); margin: 18px 0 4px; position: relative; }
+  .modal-switch { text-align: center; font-size: 13px; color: var(--muted); margin-top: 18px; }
+  .modal-switch button { background: none; border: none; color: var(--primary); font-weight: 800; font-size: 13px; }
+
+  /* ── Wishlist ── */
+  .btn-wishlist { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.92); border: none; font-size: 15px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(0,0,0,0.15); z-index: 3; }
+  .btn-wishlist.is-active { background: #ffe8e8; }
+
+  /* ── Rating ── */
+  .product-rating { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+  .product-rating .stars { color: #ffb400; letter-spacing: -1px; }
+
+  /* ── Quick categories ── */
+  .quick-cat-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 32px; }
+  .quick-cat-btn { background: white; border: 1px solid var(--border); border-radius: 14px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: var(--text); transition: all 0.2s; }
+  .quick-cat-btn:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: var(--shadow); }
+  .quick-cat-btn .icon { font-size: 26px; }
+  @media (max-width: 768px) { .quick-cat-row { grid-template-columns: repeat(3, 1fr); } }
+
+  /* ── Section header w/ timer ── */
+  .section-head-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
+  .section-head-row .section-heading { margin-bottom: 0; }
+  .deal-timer { background: var(--text); color: white; font-size: 13px; font-weight: 800; padding: 6px 14px; border-radius: 20px; font-variant-numeric: tabular-nums; }
+
+  /* ── Horizontal scroll rows ── */
+  .hscroll { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; }
+  .hscroll::-webkit-scrollbar { height: 6px; }
+  .hscroll::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+  .hscroll > * { flex: 0 0 190px; }
+
+  /* ── Deal card ── */
+  .deal-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); cursor: pointer; position: relative; transition: transform 0.2s; }
+  .deal-card:hover { transform: translateY(-4px); }
+  .deal-card img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .deal-card .deal-body { padding: 11px; }
+  .deal-flag { position: absolute; top: 0; left: 0; background: var(--accent); color: white; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 0 0 8px 0; z-index: 2; }
+
+  /* ── Best card ── */
+  .best-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); cursor: pointer; position: relative; }
+  .best-card:hover { transform: translateY(-4px); transition: transform 0.2s; }
+  .best-card img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .best-rank { position: absolute; top: 8px; left: 8px; width: 26px; height: 26px; background: var(--text); color: white; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; z-index: 2; }
+  .best-card .best-body { padding: 11px; }
+
+  /* ── Promo banners ── */
+  .promo-banner { display: block; width: 100%; border: none; border-radius: 16px; padding: 26px 30px; text-align: left; color: white; margin-bottom: 32px; cursor: pointer; }
+  .promo-banner h3 { font-size: 21px; font-weight: 900; margin-bottom: 6px; }
+  .promo-banner p { font-size: 13px; opacity: 0.92; }
+  .promo-signup { background: linear-gradient(120deg, #1a6b3c, #2d9b5c); }
+  .promo-free-ship { background: linear-gradient(120deg, #ff6b35, #ff9558); }
+
+  .event-banner-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+  @media (max-width: 768px) { .event-banner-row { grid-template-columns: 1fr; } }
+  .event-banner { border: none; border-radius: 16px; padding: 0; overflow: hidden; position: relative; height: 160px; cursor: pointer; text-align: left; }
+  .event-banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+  .event-banner .ev-inner { position: relative; z-index: 2; padding: 24px; color: white; }
+  .event-banner h4 { font-size: 18px; font-weight: 900; margin-bottom: 6px; text-shadow: 0 2px 6px rgba(0,0,0,0.5); }
+  .event-banner p { font-size: 12px; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+
+  /* ── Detail tabs ── */
+  .detail-tabs { display: flex; border-bottom: 2px solid var(--border); margin: 36px 0 0; }
+  .detail-tab { flex: 1; background: none; border: none; padding: 14px; font-size: 15px; font-weight: 700; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -2px; }
+  .detail-tab.is-active { color: var(--primary); border-bottom-color: var(--primary); }
+  .tab-panel { display: none; background: white; border-radius: 0 0 16px 16px; padding: 28px; box-shadow: var(--shadow); }
+  .tab-panel.is-active { display: block; }
+  .review-item { border-bottom: 1px solid var(--border); padding: 16px 0; }
+  .review-item:last-child { border-bottom: none; }
+  .review-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .review-stars { color: #ffb400; font-size: 13px; }
+  .review-author { font-size: 13px; font-weight: 700; }
+  .review-date { font-size: 12px; color: var(--muted); margin-left: auto; }
+  .review-body { font-size: 14px; color: #444; line-height: 1.7; }
+  .delivery-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .delivery-table th, .delivery-table td { border: 1px solid var(--border); padding: 12px 14px; text-align: left; }
+  .delivery-table th { background: var(--bg); font-weight: 700; width: 30%; }
+
+  .detail-action-row { display: flex; gap: 10px; margin-top: 12px; }
+  .btn-buy-now { flex: 1; background: var(--accent); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: 800; }
+  .btn-icon-action { width: 52px; border: 1px solid var(--border); background: white; border-radius: 10px; font-size: 18px; }
+  .btn-icon-action.is-active { background: #ffe8e8; border-color: #ffb3b3; }
+  .share-row { display: flex; gap: 8px; margin-top: 12px; }
+  .btn-share { flex: 1; border: 1px solid var(--border); background: white; border-radius: 8px; padding: 9px; font-size: 13px; font-weight: 600; }
+
+  .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .breadcrumb button { background: none; border: none; color: var(--muted); font-size: 13px; padding: 0; }
+  .breadcrumb button:hover { color: var(--primary); }
+
+  /* ── Coupon / delivery options ── */
+  .coupon-row { display: flex; gap: 8px; margin-top: 12px; }
+  .coupon-row input { flex: 1; border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 14px; outline: none; }
+  .btn-apply-coupon { background: var(--text); color: white; border: none; padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 700; white-space: nowrap; }
+  .delivery-options { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-delivery-option { border: 2px solid var(--border); border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: 600; background: white; color: var(--muted); }
+  .btn-delivery-option.is-selected { border-color: var(--primary); color: var(--primary); background: #f0faf4; }
+
+  /* ── Footer ── */
+  .site-footer { background: #23282c; color: #b0b8be; margin-top: 60px; padding: 40px 20px 30px; font-size: 13px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 18px; padding-bottom: 20px; border-bottom: 1px solid #3a4045; margin-bottom: 20px; }
+  .footer-link { background: none; border: none; color: #d5dbe0; font-size: 13px; font-weight: 600; padding: 0; }
+  .footer-link:hover { color: white; text-decoration: underline; }
+  .footer-company { line-height: 1.9; font-size: 12px; color: #8b949b; }
+  .footer-sns { display: flex; gap: 10px; margin-top: 18px; }
+  .btn-sns { width: 36px; height: 36px; border-radius: 50%; background: #3a4045; border: none; color: white; font-size: 15px; }
+
+  /* ── Scroll top / toast ── */
+  #btn-scroll-top { position: fixed; right: 22px; bottom: 22px; width: 46px; height: 46px; border-radius: 50%; background: var(--primary); color: white; border: none; font-size: 20px; box-shadow: 0 4px 14px rgba(0,0,0,0.25); z-index: 400; display: none; }
+  #btn-scroll-top.is-visible { display: block; }
+  #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--text); color: white; padding: 11px 24px; border-radius: 22px; font-size: 13px; font-weight: 700; z-index: 9999; box-shadow: 0 4px 14px rgba(0,0,0,0.25); opacity: 0; pointer-events: none; transition: opacity 0.25s; }
+  #toast.is-visible { opacity: 1; }
+
   @media (max-width: 768px) {
     .detail-layout { grid-template-columns: 1fr; gap: 20px; padding: 20px; }
     .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .checkout-layout { grid-template-columns: 1fr; }
     .hero-section h1 { font-size: 22px; }
     .header-nav .btn-cart span:not(.cart-item-count) { display: none; }
+
+    /* 헤더: 검색창을 두 번째 줄로 내림 */
+    .header-inner { height: auto; padding: 10px 14px; flex-wrap: wrap; gap: 10px; }
+    .site-logo { font-size: 19px; }
+    .header-nav { gap: 6px; margin-left: auto; }
+    .search-form { order: 3; flex: 1 0 100%; max-width: none; height: 38px; }
+    .btn-header { padding: 6px 9px; font-size: 12px; }
+    .btn-cart { padding: 6px 10px; }
+    .category-bar { top: 108px; }
+    header { position: static; }
+    .category-bar { position: static; }
+
+    .hscroll > * { flex: 0 0 150px; }
+    .quick-cat-btn { padding: 12px 4px; font-size: 11px; }
+    .quick-cat-btn .icon { font-size: 22px; }
+    .promo-banner { padding: 20px; }
+    .promo-banner h3 { font-size: 17px; }
+    .detail-tab { font-size: 13px; padding: 12px 6px; }
+    .tab-panel { padding: 18px; }
+    .delivery-table th, .delivery-table td { padding: 9px 10px; font-size: 13px; }
+    .delivery-table th { width: 34%; }
+    .modal-box { padding: 22px; }
+
+    /* 히어로 배너 */
+    .hero-banner { height: 220px; }
+    .banner-slide { padding: 0 40px; }
+    .banner-title { font-size: 19px; margin-bottom: 7px; }
+    .banner-title br { display: none; }
+    .banner-tag { font-size: 10px; padding: 3px 9px; margin-bottom: 7px; }
+    .banner-sub { font-size: 12px; margin-bottom: 12px; }
+    .banner-cta { font-size: 12px; padding: 8px 16px; }
+    .banner-arrow { width: 32px; height: 32px; font-size: 15px; }
+    .banner-arrow.prev { left: 4px; }
+    .banner-arrow.next { right: 4px; }
   }
   </style>
 </head>
@@ -201,7 +366,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <input type="text" id="search-input" name="q" placeholder="신라면, 초코파이, 밀키트..." autocomplete="off">
       <button type="submit" id="btn-search">🔍</button>
     </form>
-    <nav class="header-nav">
+    <nav class="header-nav" id="header-nav">
+      <div id="auth-area-logged-out">
+        <button class="btn-header" id="btn-login" onclick="openLoginModal()">로그인</button>
+        <button class="btn-header" id="btn-signup" onclick="openSignupModal()">회원가입</button>
+      </div>
+      <div class="user-menu-wrap" id="auth-area-logged-in" style="display:none;">
+        <button class="btn-header" id="btn-user-menu" onclick="toggleUserMenu()"><span id="user-display-name">회원</span>님 ▾</button>
+        <div class="user-dropdown" id="user-dropdown">
+          <button id="btn-mypage" onclick="handleMyMenu('마이페이지')">마이페이지</button>
+          <button id="btn-order-history" onclick="handleMyMenu('주문내역')">주문내역</button>
+          <button id="btn-logout" onclick="doLogout()">로그아웃</button>
+        </div>
+      </div>
+      <button class="btn-header" id="btn-wishlist-header" onclick="openWishlist()">
+        ♡ <span class="cart-item-count" id="wishlist-count">0</span>
+      </button>
       <button class="btn-cart" id="btn-open-cart" onclick="openCart()">
         🛒 <span>장바구니</span>
         <span class="cart-item-count" id="cart-item-count">0</span>
@@ -209,6 +389,60 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </nav>
   </div>
 </header>
+
+<!-- ══ LOGIN MODAL ══ -->
+<div class="modal-overlay" id="modal-login" onclick="if(event.target===this)closeModals()">
+  <div class="modal-box">
+    <button class="btn-modal-close" id="btn-close-login" onclick="closeModals()">✕</button>
+    <h2 class="modal-title">로그인</h2>
+    <p class="modal-sub">AGM마켓에서 더 신선하게 쇼핑하세요</p>
+    <form id="login-form" onsubmit="doLogin(event)">
+      <div class="form-field">
+        <label class="form-field-label" for="login-email">이메일</label>
+        <input class="form-field-input" id="login-email" name="email" type="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-field">
+        <label class="form-field-label" for="login-password">비밀번호</label>
+        <input class="form-field-input" id="login-password" name="password" type="password" placeholder="••••••••" required>
+      </div>
+      <button class="btn-modal-submit" id="btn-login-submit" type="submit">로그인</button>
+    </form>
+    <p class="modal-divider">— 간편 로그인 —</p>
+    <div class="social-login-row">
+      <button class="btn-social btn-social-kakao" id="btn-social-kakao" data-social-provider="kakao" onclick="doSocialLogin('kakao')">카카오로 시작하기</button>
+      <button class="btn-social btn-social-naver" id="btn-social-naver" data-social-provider="naver" onclick="doSocialLogin('naver')">네이버로 시작하기</button>
+    </div>
+    <p class="modal-switch">아직 회원이 아니신가요? <button id="btn-switch-to-signup" onclick="openSignupModal()">회원가입</button></p>
+  </div>
+</div>
+
+<!-- ══ SIGNUP MODAL ══ -->
+<div class="modal-overlay" id="modal-signup" onclick="if(event.target===this)closeModals()">
+  <div class="modal-box">
+    <button class="btn-modal-close" id="btn-close-signup" onclick="closeModals()">✕</button>
+    <h2 class="modal-title">회원가입</h2>
+    <p class="modal-sub">지금 가입하면 5,000원 쿠폰 즉시 지급</p>
+    <form id="signup-form" onsubmit="doSignup(event)">
+      <div class="form-field">
+        <label class="form-field-label" for="signup-name">이름</label>
+        <input class="form-field-input" id="signup-name" name="name" type="text" placeholder="홍길동" required>
+      </div>
+      <div class="form-field">
+        <label class="form-field-label" for="signup-email">이메일</label>
+        <input class="form-field-input" id="signup-email" name="email" type="email" placeholder="you@example.com" required>
+      </div>
+      <div class="form-field">
+        <label class="form-field-label" for="signup-password">비밀번호</label>
+        <input class="form-field-input" id="signup-password" name="password" type="password" placeholder="8자 이상" required>
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin:10px 0 4px;">
+        <input type="checkbox" id="signup-agree-marketing" name="agree_marketing"> 마케팅 정보 수신 동의 (선택)
+      </label>
+      <button class="btn-modal-submit" id="btn-signup-submit" type="submit">가입하고 쿠폰 받기</button>
+    </form>
+    <p class="modal-switch">이미 회원이신가요? <button id="btn-switch-to-login" onclick="openLoginModal()">로그인</button></p>
+  </div>
+</div>
 
 <!-- ══ CATEGORY BAR ══ -->
 <nav id="category-bar" class="category-bar">
@@ -232,7 +466,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- Banner 1 -->
       <div class="banner-slide" id="banner-1" data-banner-id="1" data-banner-title="신라면 특가" style="background:#0f4526;">
-        <img class="banner-bg" src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=1200&h=400&fit=crop&auto=format" alt="">
+        <img class="banner-bg" src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=1200&h=400&fit=crop&auto=format" alt="" onerror="this.onerror=null;this.src=FALLBACK_IMG">
         <div class="banner-content">
           <span class="banner-tag">🔥 오늘만 특가</span>
           <h2 class="banner-title">신라면 40개입<br>박스 최대 40% 할인</h2>
@@ -243,7 +477,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- Banner 2 -->
       <div class="banner-slide" id="banner-2" data-banner-id="2" data-banner-title="밀키트 신상" style="background:#1a3a5c;">
-        <img class="banner-bg" src="https://images.unsplash.com/photo-1547592180-85f173990554?w=1200&h=400&fit=crop&auto=format" alt="">
+        <img class="banner-bg" src="https://images.unsplash.com/photo-1498654896293-37aacf113fd9?w=1200&h=400&fit=crop&auto=format" alt="" onerror="this.onerror=null;this.src=FALLBACK_IMG">
         <div class="banner-content">
           <span class="banner-tag">🆕 신상 출시</span>
           <h2 class="banner-title">프리미엄 밀키트<br>갈비찜·부대찌개 신규입고</h2>
@@ -254,7 +488,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- Banner 3 -->
       <div class="banner-slide" id="banner-3" data-banner-id="3" data-banner-title="음료 기획전" style="background:#7b3200;">
-        <img class="banner-bg" src="https://images.unsplash.com/photo-1581098365941-d569b5d3de08?w=1200&h=400&fit=crop&auto=format" alt="">
+        <img class="banner-bg" src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=1200&h=400&fit=crop&auto=format" alt="" onerror="this.onerror=null;this.src=FALLBACK_IMG">
         <div class="banner-content">
           <span class="banner-tag">🥤 여름 기획전</span>
           <h2 class="banner-title">탄산음료·생수·밀크티<br>3+1 묶음 할인</h2>
@@ -265,7 +499,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- Banner 4 -->
       <div class="banner-slide" id="banner-4" data-banner-id="4" data-banner-title="과자 스낵 세일" style="background:#5c2d00;">
-        <img class="banner-bg" src="https://images.unsplash.com/photo-1621447504864-d8686e12698c?w=1200&h=400&fit=crop&auto=format" alt="">
+        <img class="banner-bg" src="https://images.unsplash.com/photo-1621447504864-d8686e12698c?w=1200&h=400&fit=crop&auto=format" alt="" onerror="this.onerror=null;this.src=FALLBACK_IMG">
         <div class="banner-content">
           <span class="banner-tag">🍪 주말 한정 SALE</span>
           <h2 class="banner-title">새우깡·허니버터칩·초코파이<br>인기 과자 최대 30% OFF</h2>
@@ -276,7 +510,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- Banner 5 -->
       <div class="banner-slide" id="banner-5" data-banner-id="5" data-banner-title="즉석식품 기획전" style="background:#1a1a4e;">
-        <img class="banner-bg" src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=1200&h=400&fit=crop&auto=format" alt="">
+        <img class="banner-bg" src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=1200&h=400&fit=crop&auto=format" alt="" onerror="this.onerror=null;this.src=FALLBACK_IMG">
         <div class="banner-content">
           <span class="banner-tag">⚡ 즉석식품 특집</span>
           <h2 class="banner-title">햇반·카레·참치캔<br>간편식 패키지 구성</h2>
@@ -297,8 +531,87 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
   <main class="page-main">
-    <h2 class="section-heading" id="product-list-title">전체 상품</h2>
-    <div class="product-grid" id="product-grid"></div>
+
+    <!-- 퀵 카테고리 -->
+    <div class="quick-cat-row" id="quick-category-row">
+      <button class="quick-cat-btn" data-category="전체"      onclick="quickCategory('전체')"><span class="icon">🛍️</span>전체</button>
+      <button class="quick-cat-btn" data-category="라면/면류" onclick="quickCategory('라면/면류')"><span class="icon">🍜</span>라면/면류</button>
+      <button class="quick-cat-btn" data-category="과자/스낵" onclick="quickCategory('과자/스낵')"><span class="icon">🍪</span>과자/스낵</button>
+      <button class="quick-cat-btn" data-category="음료"      onclick="quickCategory('음료')"><span class="icon">🥤</span>음료</button>
+      <button class="quick-cat-btn" data-category="밀키트"    onclick="quickCategory('밀키트')"><span class="icon">🥘</span>밀키트</button>
+      <button class="quick-cat-btn" data-category="즉석식품"  onclick="quickCategory('즉석식품')"><span class="icon">🍱</span>즉석식품</button>
+    </div>
+
+    <!-- 오늘의 특가 -->
+    <section id="section-today-deal">
+      <div class="section-head-row">
+        <h2 class="section-heading">⚡ 오늘의 특가</h2>
+        <span class="deal-timer" id="deal-timer">마감까지 00:00:00</span>
+      </div>
+      <div class="hscroll" id="today-deal-list"></div>
+    </section>
+
+    <!-- 신규가입 프로모션 -->
+    <button class="promo-banner promo-signup" id="promo-signup-coupon" data-promo-id="signup-coupon" data-promo-name="신규가입 5000원 쿠폰" onclick="handlePromo('signup-coupon')" style="margin-top:32px;">
+      <h3>🎁 신규 가입 시 5,000원 쿠폰 즉시 지급</h3>
+      <p>가입 후 첫 주문부터 바로 사용 가능 · 최소 주문금액 없음</p>
+    </button>
+
+    <!-- 베스트 상품 -->
+    <section id="section-best">
+      <div class="section-head-row">
+        <h2 class="section-heading">🏆 베스트 상품 TOP 5</h2>
+      </div>
+      <div class="hscroll" id="best-product-list"></div>
+    </section>
+
+    <!-- 이벤트 배너 2열 -->
+    <div class="event-banner-row" id="event-banner-row" style="margin-top:32px;">
+      <button class="event-banner" id="event-banner-summer" data-event-id="summer-sale" data-event-name="여름 시원특가" onclick="handleEvent('summer-sale','음료')">
+        <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=800&h=400&fit=crop&auto=format" alt="" onerror="this.onerror=null;this.src=FALLBACK_IMG">
+        <div class="ev-inner" style="background:linear-gradient(90deg,rgba(0,60,90,0.75),transparent);height:100%;">
+          <h4>🧊 여름 시원특가</h4>
+          <p>음료·생수 전 품목 최대 35% 할인</p>
+        </div>
+      </button>
+      <button class="event-banner" id="event-banner-mealkit" data-event-id="mealkit-fair" data-event-name="밀키트 기획전" onclick="handleEvent('mealkit-fair','밀키트')">
+        <img src="https://images.unsplash.com/photo-1498654896293-37aacf113fd9?w=800&h=400&fit=crop&auto=format" alt="" onerror="this.onerror=null;this.src=FALLBACK_IMG">
+        <div class="ev-inner" style="background:linear-gradient(90deg,rgba(90,30,0,0.75),transparent);height:100%;">
+          <h4>🥘 밀키트 기획전</h4>
+          <p>집밥 한 끼, 15분이면 완성</p>
+        </div>
+      </button>
+    </div>
+
+    <!-- 신상품 -->
+    <section id="section-new-arrival">
+      <div class="section-head-row">
+        <h2 class="section-heading">🆕 신상품</h2>
+      </div>
+      <div class="hscroll" id="new-arrival-list"></div>
+    </section>
+
+    <!-- 무료배송 프로모션 -->
+    <button class="promo-banner promo-free-ship" id="promo-free-shipping" data-promo-id="free-shipping" data-promo-name="3만원 이상 무료배송" onclick="handlePromo('free-shipping')" style="margin-top:32px;">
+      <h3>🚚 3만원 이상 주문 시 배송비 무료</h3>
+      <p>새벽배송 지역 확대 · 오후 11시 전 주문 시 다음날 아침 도착</p>
+    </button>
+
+    <!-- 전체 상품 -->
+    <section id="section-all-products">
+      <h2 class="section-heading" id="product-list-title">전체 상품</h2>
+      <div class="product-grid" id="product-grid"></div>
+    </section>
+
+    <!-- 최근 본 상품 -->
+    <section id="section-recently-viewed" style="margin-top:44px; display:none;">
+      <div class="section-head-row">
+        <h2 class="section-heading">👀 최근 본 상품</h2>
+        <button class="footer-link" id="btn-clear-recently-viewed" style="color:var(--muted)" onclick="clearRecentlyViewed()">전체 삭제</button>
+      </div>
+      <div class="hscroll" id="recently-viewed-list"></div>
+    </section>
+
   </main>
 </div>
 
@@ -344,6 +657,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 <!-- ══════════════════════════════ -->
+<!-- PAGE VIEW: WISHLIST           -->
+<!-- ══════════════════════════════ -->
+<div id="page-wishlist" class="page-view">
+  <main class="page-main">
+    <button class="btn-back" id="btn-back-from-wishlist" onclick="goHome()">← 계속 쇼핑하기</button>
+    <h2 class="section-heading">♥ 찜한 상품</h2>
+    <div class="product-grid" id="wishlist-grid"></div>
+  </main>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer" id="site-footer">
+  <div class="footer-inner">
+    <div class="footer-links" id="footer-links">
+      <button class="footer-link" data-link-name="회사소개"        onclick="handleFooterLink('회사소개')">회사소개</button>
+      <button class="footer-link" data-link-name="이용약관"        onclick="handleFooterLink('이용약관')">이용약관</button>
+      <button class="footer-link" data-link-name="개인정보처리방침" onclick="handleFooterLink('개인정보처리방침')"><b>개인정보처리방침</b></button>
+      <button class="footer-link" data-link-name="고객센터"        onclick="handleFooterLink('고객센터')">고객센터</button>
+      <button class="footer-link" data-link-name="입점문의"        onclick="handleFooterLink('입점문의')">입점문의</button>
+      <button class="footer-link" data-link-name="채용"            onclick="handleFooterLink('채용')">채용</button>
+      <button class="footer-link" data-link-name="공지사항"        onclick="handleFooterLink('공지사항')">공지사항</button>
+    </div>
+    <div class="footer-company">
+      <div>(주)AGM마켓 · 대표 홍길동 · 서울특별시 강남구 테헤란로 123, 4층</div>
+      <div>사업자등록번호 123-45-67890 · 통신판매업신고 제2026-서울강남-0001호</div>
+      <div>고객센터 1588-0000 (평일 09:00~18:00) · help@agmmarket.example</div>
+      <div style="margin-top:10px;">본 사이트는 GA4 / GTM 데모용으로 제작된 가상의 쇼핑몰입니다. 실제 거래는 이루어지지 않습니다.</div>
+      <div style="margin-top:14px;">© 2026 AGM마켓. All rights reserved.</div>
+    </div>
+    <div class="footer-sns" id="footer-sns">
+      <button class="btn-sns" data-sns="instagram" onclick="handleFooterLink('SNS-instagram')">📷</button>
+      <button class="btn-sns" data-sns="youtube"   onclick="handleFooterLink('SNS-youtube')">▶</button>
+      <button class="btn-sns" data-sns="blog"      onclick="handleFooterLink('SNS-blog')">✎</button>
+    </div>
+  </div>
+</footer>
+
+<button id="btn-scroll-top" onclick="scrollToTop()" aria-label="맨 위로">↑</button>
+<div id="toast"></div>
+
+<!-- ══════════════════════════════ -->
 <!-- JAVASCRIPT                    -->
 <!-- ══════════════════════════════ -->
 <script>
@@ -363,7 +717,7 @@ const PRODUCTS = [
     description:'스코빌 지수 4,404SHU의 극강의 매운맛. 전 세계 75개국에 수출되는 K-푸드 대표 아이콘입니다.',
     weight:'140g', origin:'한국', shelf:'12개월' },
   { id:'p03', name:'농심 짜파게티', brand:'농심', category:'라면/면류', price:1100, originalPrice:1400,
-    image:'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=500&h=500&fit=crop&auto=format',
+    image:'https://images.unsplash.com/photo-1585032226651-759b368d7246?w=500&h=500&fit=crop&auto=format',
     badge:'베스트',
     description:'진한 자장 소스와 두꺼운 면발의 조화. 짜파구리로 더욱 유명해진 스테디셀러 볶음라면입니다.',
     weight:'140g', origin:'한국', shelf:'12개월' },
@@ -374,7 +728,7 @@ const PRODUCTS = [
     weight:'120g', origin:'한국', shelf:'12개월' },
   // 과자/스낵
   { id:'p05', name:'롯데 초코파이', brand:'롯데제과', category:'과자/스낵', price:3800, originalPrice:4500,
-    image:'https://images.unsplash.com/photo-1549007994-cb8bed9adfa9?w=500&h=500&fit=crop&auto=format',
+    image:'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=500&h=500&fit=crop&auto=format',
     badge:'베스트',
     description:'촉촉한 케이크에 마시멜로우가 가득, 달콤한 초콜릿 코팅까지. 1974년부터 이어온 국민 과자입니다.',
     weight:'12개입 336g', origin:'한국', shelf:'6개월' },
@@ -384,18 +738,18 @@ const PRODUCTS = [
     description:'담백하고 고소한 새우 맛의 스낵. 손이 멈추지 않는 바삭한 식감으로 50년 넘게 사랑받는 스낵입니다.',
     weight:'90g', origin:'한국', shelf:'6개월' },
   { id:'p07', name:'오리온 포카칩 오리지널', brand:'오리온', category:'과자/스낵', price:1800, originalPrice:2200,
-    image:'https://images.unsplash.com/photo-1566478989799-f57e1fe5e97e?w=500&h=500&fit=crop&auto=format',
+    image:'https://images.unsplash.com/photo-1613919113640-25732ec5e61f?w=500&h=500&fit=crop&auto=format',
     badge:'신상',
     description:'감자 본연의 맛을 살린 얇고 바삭한 감자칩. 라이트 소금 간이 딱 맞아 질리지 않는 맛입니다.',
     weight:'66g', origin:'한국', shelf:'6개월' },
   { id:'p08', name:'해태 허니버터칩', brand:'해태제과', category:'과자/스낵', price:2200, originalPrice:2600,
-    image:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&h=500&fit=crop&auto=format',
+    image:'https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=500&h=500&fit=crop&auto=format',
     badge:'HOT',
     description:'달콤한 꿀과 고소한 버터의 완벽한 조합. 출시와 동시에 품귀 현상을 일으킨 전설의 과자입니다.',
     weight:'60g', origin:'한국', shelf:'6개월' },
   // 음료
   { id:'p09', name:'코카콜라 355ml', brand:'코카콜라', category:'음료', price:1800, originalPrice:2000,
-    image:'https://images.unsplash.com/photo-1629203851122-3726b55b1b9f?w=500&h=500&fit=crop&auto=format',
+    image:'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=500&h=500&fit=crop&auto=format',
     badge:null,
     description:'세계 1등 탄산음료. 독특한 콜라 풍미와 상쾌한 탄산이 어우러진 맛으로 130년 역사를 자랑합니다.',
     weight:'355ml', origin:'한국', shelf:'12개월' },
@@ -405,7 +759,7 @@ const PRODUCTS = [
     description:'제주 화산암반에서 18~20년 걸러진 청정수. 미네랄 균형이 뛰어나 한국 생수 시장 1위 제품입니다.',
     weight:'2L', origin:'제주도', shelf:'12개월' },
   { id:'p11', name:'동원 데자와 밀크티', brand:'동원F&B', category:'음료', price:1600, originalPrice:2000,
-    image:'https://images.unsplash.com/photo-1556679343-c4306a37c58b?w=500&h=500&fit=crop&auto=format',
+    image:'https://images.unsplash.com/photo-1558857563-b371033873b8?w=500&h=500&fit=crop&auto=format',
     badge:'신상',
     description:'진한 홍차와 고소한 우유의 황금 비율. 달콤하고 부드러운 맛으로 편의점 밀크티 대표 제품입니다.',
     weight:'500ml', origin:'한국', shelf:'12개월' },
@@ -421,23 +775,23 @@ const PRODUCTS = [
     description:'육즙 가득한 왕만두와 진한 육수가 한 패키지에. 10분이면 완성되는 간편 만두 요리입니다.',
     weight:'540g (2인분)', origin:'한국', shelf:'냉동 9개월' },
   { id:'p14', name:'삼겹살 된장찌개 밀키트', brand:'프레시지', category:'밀키트', price:12900, originalPrice:16000,
-    image:'https://images.unsplash.com/photo-1583224964978-2257b808f6b5?w=500&h=500&fit=crop&auto=format',
+    image:'https://images.unsplash.com/photo-1596797038530-2c107229654b?w=500&h=500&fit=crop&auto=format',
     badge:'HOT',
     description:'두툼한 삼겹살과 진한 된장 국물이 만나 완성되는 집밥의 맛. 손질된 재료로 15분 완성 가능합니다.',
     weight:'600g (2인분)', origin:'한국', shelf:'냉장 7일' },
   { id:'p15', name:'궁중 갈비찜 밀키트', brand:'마이셰프', category:'밀키트', price:18900, originalPrice:24000,
-    image:'https://images.unsplash.com/photo-1551183936-8892d4741a4f?w=500&h=500&fit=crop&auto=format',
+    image:'https://images.unsplash.com/photo-1544025162-d76694265947?w=500&h=500&fit=crop&auto=format',
     badge:'신상',
     description:'부드럽게 양념된 소갈비로 만드는 명절 요리 그대로의 맛. 특별한 날 더욱 빛나는 프리미엄 밀키트입니다.',
     weight:'800g (2-3인분)', origin:'한국', shelf:'냉장 5일' },
   { id:'p16', name:'부대찌개 밀키트', brand:'올리브마켓', category:'밀키트', price:9900, originalPrice:13000,
-    image:'https://images.unsplash.com/photo-1607301405390-d831c242f59b?w=500&h=500&fit=crop&auto=format',
+    image:'https://images.unsplash.com/photo-1547928576-b822bc410bdf?w=500&h=500&fit=crop&auto=format',
     badge:'베스트',
     description:'소시지, 햄, 두부, 김치가 한가득. 국민 찌개 부대찌개를 집에서 간편하게 즐겨보세요.',
     weight:'700g (2인분)', origin:'한국', shelf:'냉장 7일' },
   // 즉석식품
   { id:'p17', name:'CJ 햇반 210g', brand:'CJ제일제당', category:'즉석식품', price:1800, originalPrice:2200,
-    image:'https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=500&h=500&fit=crop&auto=format',
+    image:'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&h=500&fit=crop&auto=format',
     badge:'베스트',
     description:'갓 지은 밥 맛 그대로. 2분이면 완성되는 간편 즉석밥. 1996년 출시 이후 즉석밥 시장을 개척한 제품입니다.',
     weight:'210g', origin:'한국', shelf:'13개월' },
@@ -447,12 +801,12 @@ const PRODUCTS = [
     description:'3분이면 완성되는 황금빛 카레. 부드럽고 구수한 맛으로 남녀노소 즐길 수 있는 즉석 카레입니다.',
     weight:'200g', origin:'한국', shelf:'24개월' },
   { id:'p19', name:'동원 참치캔 150g', brand:'동원F&B', category:'즉석식품', price:2800, originalPrice:3500,
-    image:'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=500&h=500&fit=crop&auto=format',
+    image:'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&h=500&fit=crop&auto=format',
     badge:'베스트',
     description:'깔끔하게 담긴 국내산 참치. 찌개, 볶음밥, 샐러드 등 다양하게 활용 가능한 만능 참치캔입니다.',
     weight:'150g', origin:'한국', shelf:'5년' },
   { id:'p20', name:'비비고 사골곰탕', brand:'CJ제일제당', category:'즉석식품', price:4500, originalPrice:5500,
-    image:'https://images.unsplash.com/photo-1547592180-85f173990554?w=500&h=500&fit=crop&auto=format',
+    image:'https://images.unsplash.com/photo-1583835746434-cf1534674b41?w=500&h=500&fit=crop&auto=format',
     badge:'신상',
     description:'사골을 진하게 우려낸 깊은 국물. 파, 소금만 넣으면 완성되는 전통 사골곰탕 그대로의 맛입니다.',
     weight:'500g', origin:'한국', shelf:'24개월' },
@@ -460,13 +814,198 @@ const PRODUCTS = [
 
 const BADGE_CLASS = { '베스트':'badge-best', 'HOT':'badge-hot', '신상':'badge-new', 'SALE':'badge-sale' };
 
+// 상품별 평점/리뷰수 (id 기반 결정론적 생성 — 새로고침해도 동일)
+PRODUCTS.forEach(p => {
+  const n = parseInt(p.id.replace('p',''), 10);
+  p.rating = (3.9 + ((n * 7) % 11) / 10).toFixed(1);
+  p.reviewCount = 120 + (n * 137) % 2400;
+});
+
+// 이미지 로드 실패 시 대체 이미지 (외부 의존 없는 inline SVG)
+const FALLBACK_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500"><rect width="500" height="500" fill="#eef2ee"/>' +
+  '<text x="250" y="245" font-family="sans-serif" font-size="44" font-weight="bold" fill="#1a6b3c" text-anchor="middle">AGM</text>' +
+  '<text x="250" y="290" font-family="sans-serif" font-size="20" fill="#8aa294" text-anchor="middle">마켓</text></svg>');
+
 // ────────────────────────────────
 // STATE
 // ────────────────────────────────
 let cart = [];
+let wishlist = [];
+let recentlyViewed = [];
+let currentUser = null;
 let currentCategory = '전체';
 let detailQty = 1;
 let selectedPayMethod = '신용/체크카드';
+let selectedDelivery = '새벽배송';
+let appliedCoupon = null;
+
+const COUPONS = { 'WELCOME5000': 5000, 'AGM3000': 3000, 'FRESH10': 10000 };
+
+// ────────────────────────────────
+// STORAGE
+// ────────────────────────────────
+function loadState() {
+  try { cart = JSON.parse(localStorage.getItem('agm_cart') || '[]'); } catch(e) { cart = []; }
+  try { wishlist = JSON.parse(localStorage.getItem('agm_wishlist') || '[]'); } catch(e) { wishlist = []; }
+  try { recentlyViewed = JSON.parse(localStorage.getItem('agm_recent') || '[]'); } catch(e) { recentlyViewed = []; }
+  try { currentUser = JSON.parse(localStorage.getItem('agm_user') || 'null'); } catch(e) { currentUser = null; }
+}
+function saveCart()     { localStorage.setItem('agm_cart', JSON.stringify(cart)); }
+function saveWishlist()  { localStorage.setItem('agm_wishlist', JSON.stringify(wishlist)); }
+function saveRecent()    { localStorage.setItem('agm_recent', JSON.stringify(recentlyViewed)); }
+function saveUser()      { currentUser ? localStorage.setItem('agm_user', JSON.stringify(currentUser)) : localStorage.removeItem('agm_user'); }
+
+// ────────────────────────────────
+// TOAST
+// ────────────────────────────────
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('is-visible');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('is-visible'), 1900);
+}
+
+// ────────────────────────────────
+// AUTH (localStorage 간이 구현)
+// ────────────────────────────────
+function openLoginModal()  { closeModals(); document.getElementById('modal-login').classList.add('is-open'); }
+function openSignupModal() { closeModals(); document.getElementById('modal-signup').classList.add('is-open'); }
+function closeModals()     { document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('is-open')); }
+
+function doLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  currentUser = { name: email.split('@')[0] || '회원', email, provider: 'email' };
+  saveUser(); renderAuthState(); closeModals();
+  showToast('✓ 로그인되었습니다');
+}
+function doSignup(e) {
+  e.preventDefault();
+  const name  = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  currentUser = { name: name || '회원', email, provider: 'email',
+                  marketingAgreed: document.getElementById('signup-agree-marketing').checked };
+  saveUser(); renderAuthState(); closeModals();
+  showToast('🎁 가입 완료! 5,000원 쿠폰(WELCOME5000)이 지급되었습니다');
+}
+function doSocialLogin(provider) {
+  const label = provider === 'kakao' ? '카카오' : '네이버';
+  currentUser = { name: label + '회원', email: provider + '@social.example', provider };
+  saveUser(); renderAuthState(); closeModals();
+  showToast('✓ ' + label + ' 계정으로 로그인되었습니다');
+}
+function doLogout() {
+  currentUser = null; saveUser(); renderAuthState();
+  document.getElementById('user-dropdown').classList.remove('is-open');
+  showToast('로그아웃되었습니다');
+}
+function toggleUserMenu() { document.getElementById('user-dropdown').classList.toggle('is-open'); }
+function handleMyMenu(name) {
+  document.getElementById('user-dropdown').classList.remove('is-open');
+  showToast(name + '은 데모 사이트에서 제공되지 않습니다');
+}
+function renderAuthState() {
+  const out = document.getElementById('auth-area-logged-out');
+  const inn = document.getElementById('auth-area-logged-in');
+  if (currentUser) {
+    out.style.display = 'none'; inn.style.display = 'block';
+    document.getElementById('user-display-name').textContent = currentUser.name;
+    document.body.setAttribute('data-login-status', 'logged-in');
+  } else {
+    out.style.display = 'block'; inn.style.display = 'none';
+    document.body.setAttribute('data-login-status', 'logged-out');
+  }
+}
+
+// ────────────────────────────────
+// WISHLIST
+// ────────────────────────────────
+function isWished(id) { return wishlist.includes(id); }
+function toggleWishlist(productId, event) {
+  if (event) event.stopPropagation();
+  const p = PRODUCTS.find(x => x.id === productId);
+  if (isWished(productId)) {
+    wishlist = wishlist.filter(id => id !== productId);
+    showToast('찜 목록에서 제거했습니다');
+  } else {
+    wishlist.push(productId);
+    showToast('♥ 찜 목록에 추가했습니다');
+  }
+  saveWishlist();
+  updateWishlistCount();
+  document.querySelectorAll('.btn-wishlist[data-product-id="' + productId + '"], #btn-wishlist-detail').forEach(btn => {
+    if (btn.dataset.productId === productId) {
+      btn.classList.toggle('is-active', isWished(productId));
+      btn.textContent = isWished(productId) ? '♥' : '♡';
+      btn.setAttribute('data-wishlist-state', isWished(productId) ? 'on' : 'off');
+    }
+  });
+  if (document.getElementById('page-wishlist').classList.contains('is-active')) renderWishlistPage();
+}
+function updateWishlistCount() { document.getElementById('wishlist-count').textContent = wishlist.length; }
+function openWishlist() { renderWishlistPage(); showPage('wishlist'); }
+function renderWishlistPage() {
+  const list = wishlist.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
+  document.getElementById('wishlist-grid').innerHTML = list.length
+    ? list.map(productCardHTML).join('')
+    : '<div style="grid-column:1/-1;text-align:center;padding:70px;color:var(--muted);font-size:15px;">찜한 상품이 없습니다.</div>';
+}
+
+// ────────────────────────────────
+// RECENTLY VIEWED
+// ────────────────────────────────
+function pushRecentlyViewed(productId) {
+  recentlyViewed = [productId, ...recentlyViewed.filter(id => id !== productId)].slice(0, 10);
+  saveRecent();
+  renderRecentlyViewed();
+}
+function clearRecentlyViewed() {
+  recentlyViewed = []; saveRecent(); renderRecentlyViewed(); showToast('최근 본 상품을 비웠습니다');
+}
+function renderRecentlyViewed() {
+  const sec = document.getElementById('section-recently-viewed');
+  const list = recentlyViewed.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
+  if (!list.length) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  document.getElementById('recently-viewed-list').innerHTML = list.map(p => `
+    <div class="recently-viewed-card best-card" data-product-id="${p.id}" data-product-name="${p.name}" data-product-price="${p.price}" onclick="showProductDetail('${p.id}')">
+      <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src=FALLBACK_IMG">
+      <div class="best-body">
+        <p class="product-name" style="margin-bottom:4px;">${p.name}</p>
+        <span class="product-price">${p.price.toLocaleString()}원</span>
+      </div>
+    </div>`).join('');
+}
+
+// ────────────────────────────────
+// PROMO / EVENT / FOOTER
+// ────────────────────────────────
+function quickCategory(cat) {
+  const tab = document.querySelector('.category-tab[data-category="' + cat + '"]');
+  filterCategory(cat, tab);
+  document.getElementById('section-all-products').scrollIntoView({ behavior: 'smooth' });
+}
+function handlePromo(promoId) {
+  if (promoId === 'signup-coupon') { currentUser ? showToast('이미 로그인되어 있습니다') : openSignupModal(); }
+  else showToast('🚚 3만원 이상 주문 시 배송비가 무료입니다');
+}
+function handleEvent(eventId, category) { quickCategory(category); }
+function handleFooterLink(name) { showToast(name + ' — 데모 사이트에서는 제공되지 않습니다'); }
+
+// ────────────────────────────────
+// SCROLL TOP
+// ────────────────────────────────
+function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+window.addEventListener('scroll', () => {
+  document.getElementById('btn-scroll-top').classList.toggle('is-visible', window.scrollY > 500);
+});
+document.addEventListener('click', (e) => {
+  const wrap = document.getElementById('auth-area-logged-in');
+  if (wrap && !wrap.contains(e.target)) document.getElementById('user-dropdown').classList.remove('is-open');
+});
 
 // ────────────────────────────────
 // PAGE NAVIGATION
@@ -502,17 +1041,26 @@ function getFilteredProducts(category) {
   return category === '전체' ? PRODUCTS : PRODUCTS.filter(p => p.category === category);
 }
 
-function renderProductGrid(category) {
-  const list = getFilteredProducts(category);
-  document.getElementById('product-grid').innerHTML = list.map(product => `
-    <article class="product-card" data-product-id="${product.id}" data-product-name="${product.name}" data-product-category="${product.category}" data-product-price="${product.price}">
+function starString(rating) {
+  const full = Math.round(rating);
+  return '★★★★★'.slice(0, full) + '☆☆☆☆☆'.slice(0, 5 - full);
+}
+
+function productCardHTML(product) {
+  const wished = isWished(product.id);
+  return `
+    <article class="product-card" data-product-id="${product.id}" data-product-name="${product.name}" data-product-category="${product.category}" data-product-price="${product.price}" data-product-brand="${product.brand}">
       <div class="product-thumbnail" onclick="showProductDetail('${product.id}')">
-        <img src="${product.image}" alt="${product.name}" loading="lazy">
+        <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src=FALLBACK_IMG">
         ${product.badge ? `<span class="product-badge ${BADGE_CLASS[product.badge]}">${product.badge}</span>` : ''}
+        <button class="btn-wishlist${wished ? ' is-active' : ''}" data-product-id="${product.id}" data-product-name="${product.name}" data-wishlist-state="${wished ? 'on' : 'off'}" onclick="toggleWishlist('${product.id}', event)">${wished ? '♥' : '♡'}</button>
       </div>
       <div class="product-info">
         <p class="product-brand">${product.brand}</p>
         <p class="product-name" onclick="showProductDetail('${product.id}')">${product.name}</p>
+        <div class="product-rating" data-rating="${product.rating}" data-review-count="${product.reviewCount}">
+          <span class="stars">${starString(product.rating)}</span> ${product.rating} <span>(${product.reviewCount.toLocaleString()})</span>
+        </div>
         <div class="product-price-wrap">
           <span class="product-price">${product.price.toLocaleString()}원</span>
           ${product.originalPrice ? `<span class="product-price-original">${product.originalPrice.toLocaleString()}원</span>` : ''}
@@ -521,13 +1069,99 @@ function renderProductGrid(category) {
         <button class="btn-add-to-cart"
           data-product-id="${product.id}"
           data-product-name="${product.name}"
+          data-product-category="${product.category}"
           data-product-price="${product.price}"
           onclick="addToCart('${product.id}', 1)">
           + 장바구니 담기
         </button>
       </div>
-    </article>
-  `).join('');
+    </article>`;
+}
+
+function renderProductGrid(category) {
+  const list = getFilteredProducts(category);
+  document.getElementById('product-grid').innerHTML = list.map(productCardHTML).join('');
+  observeImpressions();
+}
+
+// ── 홈 프로모션 섹션 렌더링 ──
+function renderHomeSections() {
+  // 오늘의 특가: 할인율 상위 4개
+  const deals = [...PRODUCTS]
+    .filter(p => p.originalPrice)
+    .sort((a,b) => (1-a.price/a.originalPrice) < (1-b.price/b.originalPrice) ? 1 : -1)
+    .slice(0, 6);
+  document.getElementById('today-deal-list').innerHTML = deals.map(p => {
+    const rate = Math.round((1 - p.price / p.originalPrice) * 100);
+    return `
+      <div class="deal-card" data-product-id="${p.id}" data-product-name="${p.name}" data-product-category="${p.category}" data-product-price="${p.price}" data-discount-rate="${rate}" onclick="showProductDetail('${p.id}')">
+        <span class="deal-flag">${rate}% OFF</span>
+        <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src=FALLBACK_IMG">
+        <div class="deal-body">
+          <p class="product-brand">${p.brand}</p>
+          <p class="product-name">${p.name}</p>
+          <div class="product-price-wrap">
+            <span class="product-price">${p.price.toLocaleString()}원</span>
+            <span class="product-price-original">${p.originalPrice.toLocaleString()}원</span>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  // 베스트: 리뷰수 상위 5개
+  const best = [...PRODUCTS].sort((a,b) => b.reviewCount - a.reviewCount).slice(0, 5);
+  document.getElementById('best-product-list').innerHTML = best.map((p, i) => `
+    <div class="best-card" data-product-id="${p.id}" data-product-name="${p.name}" data-product-category="${p.category}" data-product-price="${p.price}" data-rank="${i+1}" onclick="showProductDetail('${p.id}')">
+      <span class="best-rank">${i+1}</span>
+      <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src=FALLBACK_IMG">
+      <div class="best-body">
+        <p class="product-brand">${p.brand}</p>
+        <p class="product-name">${p.name}</p>
+        <div class="product-rating"><span class="stars">${starString(p.rating)}</span> ${p.rating}</div>
+        <span class="product-price">${p.price.toLocaleString()}원</span>
+      </div>
+    </div>`).join('');
+
+  // 신상품: badge === '신상'
+  const news = PRODUCTS.filter(p => p.badge === '신상');
+  document.getElementById('new-arrival-list').innerHTML = news.map(p => `
+    <div class="new-arrival-card best-card" data-product-id="${p.id}" data-product-name="${p.name}" data-product-category="${p.category}" data-product-price="${p.price}" onclick="showProductDetail('${p.id}')">
+      <span class="best-rank" style="background:#0c5460;">NEW</span>
+      <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src=FALLBACK_IMG">
+      <div class="best-body">
+        <p class="product-brand">${p.brand}</p>
+        <p class="product-name">${p.name}</p>
+        <span class="product-price">${p.price.toLocaleString()}원</span>
+      </div>
+    </div>`).join('');
+}
+
+// ── 특가 카운트다운 (자정 마감) ──
+function tickDealTimer() {
+  const now = new Date();
+  const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+  let s = Math.max(0, Math.floor((end - now) / 1000));
+  const hh = String(Math.floor(s/3600)).padStart(2,'0');
+  const mm = String(Math.floor(s%3600/60)).padStart(2,'0');
+  const ss = String(s%60).padStart(2,'0');
+  document.getElementById('deal-timer').textContent = `마감까지 ${hh}:${mm}:${ss}`;
+}
+
+// ── 상품 노출 추적용 클래스 부여 (IntersectionObserver) ──
+let impressionObserver = null;
+function observeImpressions() {
+  if (!('IntersectionObserver' in window)) return;
+  if (!impressionObserver) {
+    impressionObserver = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting && !en.target.classList.contains('is-impression-tracked')) {
+          en.target.classList.add('is-impression-tracked');
+          en.target.setAttribute('data-impressed', 'true');
+        }
+      });
+    }, { threshold: 0.5 });
+  }
+  document.querySelectorAll('.product-card:not(.is-impression-tracked)').forEach(el => impressionObserver.observe(el));
 }
 
 // ────────────────────────────────
@@ -537,14 +1171,21 @@ function showProductDetail(productId) {
   const product = PRODUCTS.find(p => p.id === productId);
   if (!product) return;
   detailQty = 1;
+  const wished = isWished(product.id);
+  const related = PRODUCTS.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
 
   document.getElementById('product-detail-container').innerHTML = `
+    <nav class="breadcrumb" id="detail-breadcrumb">
+      <button data-crumb="홈" onclick="goHome()">홈</button> ›
+      <button data-crumb="${product.category}" onclick="quickCategory('${product.category}')">${product.category}</button> ›
+      <span>${product.name}</span>
+    </nav>
     <div class="detail-layout"
       data-product-id="${product.id}"
       data-product-name="${product.name}"
       data-product-category="${product.category}"
       data-product-price="${product.price}">
-      <img class="detail-product-image" src="${product.image}" alt="${product.name}">
+      <img class="detail-product-image" src="${product.image}" alt="${product.name}" onerror="this.onerror=null;this.src=FALLBACK_IMG">
       <div class="detail-right">
         <p class="detail-brand">${product.brand}</p>
         <h1 class="detail-product-name">${product.name}</h1>
@@ -572,15 +1213,140 @@ function showProductDetail(productId) {
           id="btn-add-to-cart-detail"
           data-product-id="${product.id}"
           data-product-name="${product.name}"
+          data-product-category="${product.category}"
           data-product-price="${product.price}"
           onclick="addToCartFromDetail('${product.id}')">
           🛒 장바구니에 담기
         </button>
+        <div class="detail-action-row">
+          <button class="btn-buy-now" id="btn-buy-now" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price}" onclick="buyNow('${product.id}')">⚡ 바로 구매하기</button>
+          <button class="btn-icon-action${wished ? ' is-active' : ''}" id="btn-wishlist-detail" data-product-id="${product.id}" data-product-name="${product.name}" data-wishlist-state="${wished ? 'on' : 'off'}" onclick="toggleWishlist('${product.id}', event)">${wished ? '♥' : '♡'}</button>
+        </div>
+        <div class="share-row">
+          <button class="btn-share" id="btn-share-kakao" data-share-channel="kakao" data-product-id="${product.id}" onclick="shareProduct('kakao','${product.id}')">💬 카카오톡 공유</button>
+          <button class="btn-share" id="btn-share-copy" data-share-channel="copy-link" data-product-id="${product.id}" onclick="shareProduct('copy','${product.id}')">🔗 링크 복사</button>
+        </div>
       </div>
     </div>
+
+    <!-- 탭 -->
+    <div class="detail-tabs" id="detail-tabs">
+      <button class="detail-tab is-active" id="tab-info"     data-tab="info"     onclick="switchDetailTab('info', this)">상품정보</button>
+      <button class="detail-tab"           id="tab-review"   data-tab="review"   onclick="switchDetailTab('review', this)">리뷰 (${product.reviewCount.toLocaleString()})</button>
+      <button class="detail-tab"           id="tab-delivery" data-tab="delivery" onclick="switchDetailTab('delivery', this)">배송/교환/반품</button>
+    </div>
+
+    <div class="tab-panel is-active" id="panel-info">
+      <h3 style="font-size:17px;font-weight:800;margin-bottom:14px;">상품 상세 정보</h3>
+      <p style="font-size:14px;line-height:1.9;color:#444;margin-bottom:20px;">${product.description}</p>
+      <table class="delivery-table">
+        <tr><th>상품명</th><td>${product.name}</td></tr>
+        <tr><th>제조사/브랜드</th><td>${product.brand}</td></tr>
+        <tr><th>중량/용량</th><td>${product.weight}</td></tr>
+        <tr><th>원산지</th><td>${product.origin}</td></tr>
+        <tr><th>유통기한</th><td>${product.shelf}</td></tr>
+        <tr><th>보관방법</th><td>직사광선을 피해 서늘한 곳에 보관</td></tr>
+        <tr><th>소비자상담</th><td>1588-0000 (평일 09:00~18:00)</td></tr>
+      </table>
+    </div>
+
+    <div class="tab-panel" id="panel-review">
+      <div style="display:flex;align-items:center;gap:16px;padding-bottom:18px;border-bottom:2px solid var(--border);margin-bottom:8px;">
+        <div style="font-size:38px;font-weight:900;color:var(--primary);">${product.rating}</div>
+        <div>
+          <div class="review-stars" style="font-size:18px;">${starString(product.rating)}</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px;">총 ${product.reviewCount.toLocaleString()}개의 리뷰</div>
+        </div>
+      </div>
+      <div id="review-list">
+        ${buildReviews(product).map((r, i) => `
+          <div class="review-item" data-review-index="${i+1}">
+            <div class="review-head">
+              <span class="review-stars">${starString(r.score)}</span>
+              <span class="review-author">${r.author}</span>
+              <span class="review-date">${r.date}</span>
+            </div>
+            <p class="review-body">${r.body}</p>
+          </div>`).join('')}
+      </div>
+      <button class="btn-share" id="btn-more-reviews" data-product-id="${product.id}" style="width:100%;margin-top:18px;padding:12px;" onclick="showToast('리뷰 더보기는 데모에서 제공되지 않습니다')">리뷰 더보기 →</button>
+    </div>
+
+    <div class="tab-panel" id="panel-delivery">
+      <h3 style="font-size:17px;font-weight:800;margin-bottom:14px;">배송 안내</h3>
+      <table class="delivery-table" style="margin-bottom:26px;">
+        <tr><th>새벽배송</th><td>오후 11시 이전 주문 시 다음날 오전 7시 전 도착 (수도권 한정)</td></tr>
+        <tr><th>일반택배</th><td>결제 완료 후 평균 2~3일 소요</td></tr>
+        <tr><th>배송비</th><td>3,000원 / 30,000원 이상 구매 시 무료</td></tr>
+        <tr><th>배송지역</th><td>전국 (일부 도서산간 지역 추가 배송비 발생)</td></tr>
+      </table>
+      <h3 style="font-size:17px;font-weight:800;margin-bottom:14px;">교환 및 반품 안내</h3>
+      <table class="delivery-table">
+        <tr><th>신청 기간</th><td>상품 수령 후 7일 이내 (신선식품은 수령 당일)</td></tr>
+        <tr><th>반품 비용</th><td>단순 변심 5,000원 / 상품 하자 시 무료</td></tr>
+        <tr><th>불가 사유</th><td>포장 개봉 및 사용 흔적이 있는 경우, 신선식품 단순 변심</td></tr>
+      </table>
+    </div>
+
+    <!-- 관련 상품 -->
+    <section id="section-related-products" style="margin-top:40px;">
+      <h2 class="section-heading">함께 보면 좋은 상품</h2>
+      <div class="hscroll" id="related-product-list">
+        ${related.map(p => `
+          <div class="related-product-card best-card" data-product-id="${p.id}" data-product-name="${p.name}" data-product-category="${p.category}" data-product-price="${p.price}" onclick="showProductDetail('${p.id}')">
+            <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src=FALLBACK_IMG">
+            <div class="best-body">
+              <p class="product-brand">${p.brand}</p>
+              <p class="product-name">${p.name}</p>
+              <span class="product-price">${p.price.toLocaleString()}원</span>
+            </div>
+          </div>`).join('')}
+      </div>
+    </section>
   `;
 
+  pushRecentlyViewed(product.id);
   showPage('detail');
+}
+
+function buildReviews(product) {
+  const names = ['김*연', '박*훈', '이*림', '최*수', '정*아'];
+  const bodies = [
+    '재구매 의사 100%입니다. 배송도 빠르고 포장 상태도 아주 깔끔했어요.',
+    '가격 대비 만족스럽습니다. 다음에 또 주문할게요!',
+    '기대했던 것보다 훨씬 좋았어요. 가족들도 다 맛있다고 하네요.',
+    '항상 먹던 제품인데 여기가 제일 저렴해서 정기적으로 구매 중입니다.',
+    '새벽배송으로 받았는데 신선하게 잘 왔습니다. 추천드려요.'
+  ];
+  const n = parseInt(product.id.replace('p',''), 10);
+  return [0,1,2,3].map(i => ({
+    author: names[(n + i) % names.length],
+    score: [5,5,4,5][i],
+    date: `2026-0${((n + i) % 8) + 1}-${String(((n * 3 + i * 7) % 27) + 1).padStart(2,'0')}`,
+    body: bodies[(n + i) % bodies.length]
+  }));
+}
+
+function switchDetailTab(tab, btn) {
+  document.querySelectorAll('.detail-tab').forEach(b => b.classList.remove('is-active'));
+  btn.classList.add('is-active');
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('is-active'));
+  document.getElementById('panel-' + tab).classList.add('is-active');
+}
+
+function buyNow(productId) {
+  addToCart(productId, detailQty, true);
+  goCheckout();
+}
+
+function shareProduct(channel, productId) {
+  if (channel === 'copy') {
+    const url = location.origin + location.pathname + '?product=' + productId;
+    if (navigator.clipboard) navigator.clipboard.writeText(url).catch(() => {});
+    showToast('🔗 상품 링크가 복사되었습니다');
+  } else {
+    showToast('💬 카카오톡 공유는 데모에서 제공되지 않습니다');
+  }
 }
 
 function changeDetailQty(delta) {
@@ -595,23 +1361,19 @@ function addToCartFromDetail(productId) {
 // ────────────────────────────────
 // CART
 // ────────────────────────────────
-function addToCart(productId, qty) {
+function addToCart(productId, qty, silent) {
   const existing = cart.find(c => c.productId === productId);
   if (existing) existing.qty += qty;
   else cart.push({ productId, qty });
   updateCartCount();
-
-  const toast = document.createElement('div');
-  toast.id = 'add-to-cart-toast';
-  toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#1a6b3c;color:white;padding:10px 22px;border-radius:20px;font-size:13px;font-weight:700;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,0.2)';
-  toast.textContent = '✓ 장바구니에 담았습니다!';
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 1800);
+  saveCart();
+  if (!silent) showToast('✓ 장바구니에 담았습니다!');
 }
 
 function removeFromCart(productId) {
   cart = cart.filter(c => c.productId !== productId);
   updateCartCount();
+  saveCart();
   renderCart();
 }
 
@@ -620,8 +1382,46 @@ function changeCartItemQty(productId, delta) {
   if (!item) return;
   item.qty = Math.max(1, item.qty + delta);
   updateCartCount();
+  saveCart();
   renderCart();
 }
+
+// ── 쿠폰 / 배송 방법 ──
+function applyCoupon() {
+  const code = document.getElementById('input-coupon').value.trim().toUpperCase();
+  const valid = !!COUPONS[code];
+  appliedCoupon = valid ? { code, amount: COUPONS[code] } : null;
+
+  renderCart(); // 합계 갱신 (컨테이너가 새로 그려짐)
+
+  // 재렌더 이후에 입력값과 안내 문구를 복원한다
+  const input = document.getElementById('input-coupon');
+  const msg = document.getElementById('coupon-message');
+  if (input) input.value = code;
+  if (msg) {
+    msg.textContent = valid
+      ? `✓ ${code} 적용 — ${COUPONS[code].toLocaleString()}원 할인`
+      : '✕ 유효하지 않은 쿠폰 코드입니다';
+    msg.style.color = valid ? 'var(--primary)' : '#c0392b';
+    msg.setAttribute('data-coupon-status', valid ? 'applied' : 'invalid');
+  }
+  if (valid) showToast('🎟 쿠폰이 적용되었습니다');
+}
+
+function selectDelivery(type, btn) {
+  selectedDelivery = type;
+  document.querySelectorAll('.btn-delivery-option').forEach(b => b.classList.remove('is-selected'));
+  btn.classList.add('is-selected');
+  renderCart();
+}
+
+function getDeliveryFee(subtotal) {
+  if (selectedDelivery === '편의점픽업') return 0;
+  if (subtotal >= 30000) return 0;
+  return selectedDelivery === '새벽배송' ? 3000 : 2500;
+}
+
+function getDiscount() { return appliedCoupon ? appliedCoupon.amount : 0; }
 
 function updateCartCount() {
   const total = cart.reduce((sum, c) => sum + c.qty, 0);
@@ -648,8 +1448,9 @@ function renderCart() {
   }
 
   const subtotal = getCartSubtotal();
-  const shipping = subtotal >= 30000 ? 0 : 3000;
-  const total = subtotal + shipping;
+  const shipping = getDeliveryFee(subtotal);
+  const discount = getDiscount();
+  const total = Math.max(0, subtotal + shipping - discount);
 
   container.innerHTML = `
     <div id="cart-item-list">
@@ -661,7 +1462,7 @@ function renderCart() {
             data-product-id="${p.id}"
             data-product-name="${p.name}"
             data-product-price="${p.price}">
-            <img class="cart-item-image" src="${p.image}" alt="${p.name}">
+            <img class="cart-item-image" src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src=FALLBACK_IMG">
             <div class="cart-item-details">
               <p class="cart-item-brand">${p.brand}</p>
               <p class="cart-item-name">${p.name}</p>
@@ -676,11 +1477,37 @@ function renderCart() {
           </div>`;
       }).join('')}
     </div>
+    <div class="cart-summary-box" id="cart-delivery-box" style="margin-top:16px;">
+      <h3 style="font-size:15px;font-weight:800;margin-bottom:12px;">🚚 배송 방법</h3>
+      <div class="delivery-options" id="delivery-options">
+        ${['새벽배송','일반배송','편의점픽업'].map(t => `
+          <button class="btn-delivery-option${t === selectedDelivery ? ' is-selected' : ''}"
+            data-delivery-type="${t}" onclick="selectDelivery('${t}', this)">${t}</button>`).join('')}
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px;">
+        ${selectedDelivery === '새벽배송' ? '오후 11시 이전 주문 시 익일 오전 7시 전 도착 (수도권)'
+          : selectedDelivery === '편의점픽업' ? '가까운 편의점에서 직접 수령 · 배송비 무료'
+          : '결제 완료 후 평균 2~3일 소요'}
+      </p>
+    </div>
+
+    <div class="cart-summary-box" id="cart-coupon-box" style="margin-top:16px;">
+      <h3 style="font-size:15px;font-weight:800;">🎟 쿠폰 / 할인</h3>
+      <div class="coupon-row">
+        <input type="text" id="input-coupon" name="coupon_code" placeholder="쿠폰 코드 입력 (예: WELCOME5000)" value="${appliedCoupon ? appliedCoupon.code : ''}">
+        <button class="btn-apply-coupon" id="btn-apply-coupon" onclick="applyCoupon()">적용</button>
+      </div>
+      <p id="coupon-message" style="font-size:12px;margin-top:8px;color:${appliedCoupon ? 'var(--primary)' : 'var(--muted)'};">
+        ${appliedCoupon ? `✓ ${appliedCoupon.code} 적용 — ${appliedCoupon.amount.toLocaleString()}원 할인` : '사용 가능 쿠폰: WELCOME5000 / AGM3000 / FRESH10'}
+      </p>
+    </div>
+
     <div class="cart-summary-box" id="cart-summary">
       <div class="cart-summary-row"><span>상품 금액</span><span id="cart-subtotal-display">${subtotal.toLocaleString()}원</span></div>
-      <div class="cart-summary-row"><span>배송비</span><span id="cart-shipping-display">${shipping === 0 ? '<span style="color:var(--primary)">무료</span>' : shipping.toLocaleString() + '원'}</span></div>
+      <div class="cart-summary-row"><span>배송비 (${selectedDelivery})</span><span id="cart-shipping-display">${shipping === 0 ? '<span style="color:var(--primary)">무료</span>' : shipping.toLocaleString() + '원'}</span></div>
+      ${discount ? `<div class="cart-summary-row" id="cart-discount-row"><span>쿠폰 할인</span><span style="color:var(--accent)">-${discount.toLocaleString()}원</span></div>` : ''}
       <div class="cart-summary-total"><span>결제 예정 금액</span><span id="cart-total-display">${total.toLocaleString()}원</span></div>
-      <button class="btn-go-checkout" id="btn-go-checkout" onclick="goCheckout()">결제하기 →</button>
+      <button class="btn-go-checkout" id="btn-go-checkout" data-cart-total="${total}" data-cart-item-count="${cart.reduce((s,c)=>s+c.qty,0)}" onclick="goCheckout()">결제하기 →</button>
     </div>
   `;
 }
@@ -695,8 +1522,9 @@ function goCheckout() {
 
 function renderCheckout() {
   const subtotal = getCartSubtotal();
-  const shipping = subtotal >= 30000 ? 0 : 3000;
-  const total = subtotal + shipping;
+  const shipping = getDeliveryFee(subtotal);
+  const discount = getDiscount();
+  const total = Math.max(0, subtotal + shipping - discount);
 
   document.getElementById('checkout-form-area').innerHTML = `
     <div class="checkout-form-card" id="shipping-info-form">
@@ -728,6 +1556,14 @@ function renderCheckout() {
         <input class="form-field-input" id="field-delivery-note" name="delivery_note" type="text" placeholder="문 앞에 놓아주세요">
       </div>
     </div>
+    <div class="checkout-form-card" id="checkout-delivery-form">
+      <h3 class="checkout-section-title">🚚 배송 방법</h3>
+      <div class="delivery-options">
+        ${['새벽배송','일반배송','편의점픽업'].map(t => `
+          <button class="btn-delivery-option${t === selectedDelivery ? ' is-selected' : ''}"
+            data-delivery-type="${t}" onclick="selectDeliveryCheckout('${t}', this)">${t}</button>`).join('')}
+      </div>
+    </div>
     <div class="checkout-form-card" id="payment-method-form">
       <h3 class="checkout-section-title">💳 결제 방법</h3>
       <div class="payment-options" id="payment-options">
@@ -748,14 +1584,15 @@ function renderCheckout() {
         const p = PRODUCTS.find(x => x.id === c.productId);
         return `
           <div class="order-summary-item" data-product-id="${p.id}">
-            <img class="order-summary-item-img" src="${p.image}" alt="${p.name}">
+            <img class="order-summary-item-img" src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src=FALLBACK_IMG">
             <span class="order-summary-item-name">${p.name} ×${c.qty}</span>
             <span class="order-summary-item-price">${(p.price * c.qty).toLocaleString()}원</span>
           </div>`;
       }).join('')}
       <div class="order-total-section">
         <div class="order-total-row"><span>상품 합계</span><span>${subtotal.toLocaleString()}원</span></div>
-        <div class="order-total-row"><span>배송비</span><span>${shipping === 0 ? '무료' : shipping.toLocaleString() + '원'}</span></div>
+        <div class="order-total-row"><span>배송비 (${selectedDelivery})</span><span>${shipping === 0 ? '무료' : shipping.toLocaleString() + '원'}</span></div>
+        ${discount ? `<div class="order-total-row" id="order-discount-row"><span>쿠폰 할인 (${appliedCoupon.code})</span><span style="color:var(--accent)">-${discount.toLocaleString()}원</span></div>` : ''}
         <div class="order-total-final"><span>최종 결제금액</span><span id="order-total-amount">${total.toLocaleString()}원</span></div>
       </div>
       <button class="btn-place-order" id="btn-place-order" data-order-total="${total}" onclick="placeOrder()">
@@ -763,6 +1600,11 @@ function renderCheckout() {
       </button>
     </div>
   `;
+}
+
+function selectDeliveryCheckout(type, btn) {
+  selectedDelivery = type;
+  renderCheckout();
 }
 
 function selectPaymentMethod(method, btn) {
@@ -776,20 +1618,23 @@ function placeOrder() {
   if (!recipientName) { alert('받는 분 이름을 입력해주세요.'); return; }
 
   const subtotal = getCartSubtotal();
-  const shipping = subtotal >= 30000 ? 0 : 3000;
-  const total = subtotal + shipping;
+  const shipping = getDeliveryFee(subtotal);
+  const discount = getDiscount();
+  const total = Math.max(0, subtotal + shipping - discount);
   const orderId = 'AGM-' + Date.now();
+  const itemCount = cart.reduce((s,c) => s + c.qty, 0);
 
-  const completedCart = [...cart];
   cart = [];
+  appliedCoupon = null;
   updateCartCount();
+  saveCart();
 
   document.getElementById('order-complete-container').innerHTML = `
     <div class="order-complete-icon">🎉</div>
     <h2 class="order-complete-title">주문이 완료되었습니다!</h2>
     <p class="order-complete-sub">주문해 주셔서 감사합니다.</p>
     <p class="order-complete-sub" style="font-size:13px;">평균 3~5일 내 배송 예정</p>
-    <div class="order-number" id="order-number" data-order-id="${orderId}">${orderId}</div>
+    <div class="order-number" id="order-number" data-order-id="${orderId}" data-order-total="${total}" data-order-item-count="${itemCount}" data-payment-method="${selectedPayMethod}" data-delivery-type="${selectedDelivery}">${orderId}</div>
     <div style="background:var(--bg);border-radius:10px;padding:16px 20px;margin-bottom:24px;text-align:left;font-size:14px;">
       <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
         <span style="color:var(--muted)">결제 금액</span>
@@ -822,28 +1667,18 @@ function doSearch(event) {
     p.category.toLowerCase().includes(query)
   );
 
-  document.getElementById('product-list-title').textContent = `"${query}" 검색 결과 ${results.length}건`;
-  document.getElementById('product-grid').innerHTML = results.length
-    ? results.map(product => `
-        <article class="product-card" data-product-id="${product.id}" data-product-name="${product.name}" data-product-category="${product.category}" data-product-price="${product.price}">
-          <div class="product-thumbnail" onclick="showProductDetail('${product.id}')">
-            <img src="${product.image}" alt="${product.name}" loading="lazy">
-            ${product.badge ? `<span class="product-badge ${BADGE_CLASS[product.badge]}">${product.badge}</span>` : ''}
-          </div>
-          <div class="product-info">
-            <p class="product-brand">${product.brand}</p>
-            <p class="product-name" onclick="showProductDetail('${product.id}')">${product.name}</p>
-            <div class="product-price-wrap">
-              <span class="product-price">${product.price.toLocaleString()}원</span>
-              ${product.originalPrice ? `<span class="product-price-original">${product.originalPrice.toLocaleString()}원</span><span class="product-discount-rate">${Math.round((1 - product.price / product.originalPrice) * 100)}%</span>` : ''}
-            </div>
-            <button class="btn-add-to-cart" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price}" onclick="addToCart('${product.id}', 1)">+ 장바구니 담기</button>
-          </div>
-        </article>`)
-      .join('')
-    : '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--muted);font-size:15px;">검색 결과가 없습니다.</div>';
+  const titleEl = document.getElementById('product-list-title');
+  titleEl.textContent = `"${query}" 검색 결과 ${results.length}건`;
+  titleEl.setAttribute('data-search-term', query);
+  titleEl.setAttribute('data-search-result-count', results.length);
 
+  document.getElementById('product-grid').innerHTML = results.length
+    ? results.map(p => productCardHTML(p).replace('class="product-card"', 'class="product-card search-result-item"')).join('')
+    : '<div style="grid-column:1/-1;text-align:center;padding:60px;color:var(--muted);font-size:15px;" id="search-no-result">검색 결과가 없습니다.</div>';
+
+  observeImpressions();
   showPage('home');
+  document.getElementById('section-all-products').scrollIntoView({ behavior: 'smooth' });
 }
 
 // ────────────────────────────────
@@ -874,7 +1709,15 @@ resetBannerTimer();
 // ────────────────────────────────
 // INIT
 // ────────────────────────────────
+loadState();
+renderAuthState();
+updateCartCount();
+updateWishlistCount();
+renderHomeSections();
+renderRecentlyViewed();
 renderProductGrid('전체');
+tickDealTimer();
+setInterval(tickDealTimer, 1000);
 </script>
 </body>
 </html>
