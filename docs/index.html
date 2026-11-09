@@ -37,6 +37,22 @@
   </script>
   <!-- End Google Tag Manager -->
 
+  <!-- GA4 for the default storefront. Custom GTM containers control their own analytics. -->
+  <script>
+  if (ACTIVE_GTM_ID === DEFAULT_GTM_ID) {
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-20C08W3HCC');
+
+    var googleTag = document.createElement('script');
+    googleTag.async = true;
+    googleTag.src = 'https://www.googletagmanager.com/gtag/js?id=G-20C08W3HCC';
+    document.head.appendChild(googleTag);
+  }
+  </script>
+
+
   <style>
   :root {
     --primary: #1a6b3c;
